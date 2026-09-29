@@ -1,7 +1,24 @@
 # Skills
 
-My collection of agent skills.
+My collection of small, reusable skills for coding agents.
+
+## Install
+
+First install [Node.js 22.20.0 or newer](https://nodejs.org/en/download), which includes `npx`.
+If `npx` is missing, the command below cannot prompt you to install Node.js.
+
+```bash
+npx skills@latest add parzival1l/skills
+```
+
+Select the skills and agents you want when prompted. To install only `bro`, use:
+
+```bash
+npx skills@latest add parzival1l/skills --skill bro
+```
 
 ## Skills
 
-- [bro](skills/bro/SKILL.md): Restate the last message in plain language. Found in [Dillon Mulroy's post on X](https://x.com/dillon_mulroy/status/2079257138438811972); copied from [his dotfiles](https://github.com/dmmulroy/.dotfiles/blob/main/home/.agents/skills/bro/SKILL.md).
+- [bro](skills/bro/SKILL.md): Restate the last message in plain language.
+
+Each skill lives in `skills/<name>/SKILL.md`. See [skills/README.md](skills/README.md) for credits and [CHANGELOG.md](CHANGELOG.md) for updates.
