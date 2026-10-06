@@ -1,0 +1,32 @@
+{
+ "diagrams": {
+  "lanes": {
+   "kind": "lanes",
+   "aria": "People own four rule files and approve them. Then agents build the interface, model, proofs, and tests, and run make verify.",
+   "lanes": [
+    {
+     "label": "People",
+     "items": [
+      "SPEC.md",
+      "RULES.md",
+      "EXAMPLES.md"
+     ]
+    },
+    {
+     "label": "Agents",
+     "items": [
+      "Interface",
+      "Model",
+      "Proofs",
+      "Tests"
+     ]
+    }
+   ],
+   "gate": "approve",
+   "end": "make verify",
+   "caption": [
+    "solid: files that exist today · dashed: work that waits for approval"
+   ]
+  }
+ }
+}

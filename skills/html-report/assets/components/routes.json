@@ -1,0 +1,61 @@
+{
+ "diagrams": {
+  "routes": {
+   "kind": "route",
+   "tabs": [
+    "Reader v1",
+    "Reader v2"
+   ],
+   "titles": [
+    "Reader v1 reads every page with one prompt",
+    "Reader v2 picks a reader for each page type"
+   ],
+   "group": "Pages",
+   "inputs": [
+    "Manual page",
+    "Datasheet",
+    "Notice",
+    "Form"
+   ],
+   "before": {
+    "node": "One prompt",
+    "sub": "Every page",
+    "bad": [
+     1
+    ],
+    "notes": [
+     "Datasheet read",
+     "as a manual"
+    ]
+   },
+   "after": {
+    "head": "Reader",
+    "lanes": [
+     "manual",
+     "datasheet",
+     "read as form",
+     "form"
+    ],
+    "bad": [
+     2
+    ],
+    "gate": "Check",
+    "end": "Save"
+   },
+   "caption": {
+    "a": [
+     "one prompt for every page type",
+     "red: the page that Reader v1 gets wrong"
+    ],
+    "b": [
+     "four readers · one check",
+     "red: the page that Reader v2 still gets wrong"
+    ]
+   },
+   "aria": [
+    "Four page types go into one prompt. The datasheet comes out as a manual.",
+    "Each page type goes to its own reader, then to one check. The notice comes out as a form."
+   ]
+  }
+ }
+}

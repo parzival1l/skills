@@ -1,0 +1,45 @@
+{
+ "diagrams": {
+  "coverage": {
+   "kind": "brackets",
+   "aria": "Documents go to one parse step, then both readers, then scoring. The results cover the readers and the scoring, not the parse step.",
+   "steps": [
+    {
+     "label": "24 documents",
+     "shape": "page"
+    },
+    {
+     "label": "Parse once"
+    },
+    {
+     "label": "Both readers",
+     "shape": "pair"
+    },
+    {
+     "label": "Score",
+     "shape": "gate",
+     "note": [
+      "fixed answer key",
+      "one person labeled it"
+     ]
+    }
+   ],
+   "brackets": [
+    {
+     "from": 1,
+     "to": 1,
+     "label": "Not measured",
+     "note": "parse time is outside the results",
+     "tone": "held"
+    },
+    {
+     "from": 2,
+     "to": 3,
+     "label": "Measured",
+     "note": "time and correctness for each reader",
+     "tone": "on"
+    }
+   ]
+  }
+ }
+}

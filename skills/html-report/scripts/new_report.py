@@ -7,7 +7,7 @@ Usage:
   new_report.py --all -o OUT/report.src.html
 
 The output holds the shared CSS and scripts, the chosen components in the
-given order, and their sample data in the report-data block. Edit only the
+given order, and their sample data in report.data.json next to it. Edit only the
 component HTML and the data. Then run build_report.py.
 """
 from __future__ import annotations
@@ -21,7 +21,7 @@ from pathlib import Path
 ASSETS = Path(__file__).resolve().parent.parent / "assets"
 PARTS = ASSETS / "components"
 ORDER = ["hero", "routes", "scope", "compare", "rules", "flow", "multiples",
-         "speed", "grid", "strips", "findings", "spotlight", "method"]
+         "speed", "grid", "strips", "findings", "spotlight", "lanes", "method"]
 
 
 def describe(cid: str) -> str:
@@ -53,16 +53,21 @@ def main() -> int:
     for c in keep:
         part = PARTS / f"{c}.json"
         if part.is_file():
-            data.update(json.loads(part.read_text(encoding="utf-8")))
+            for key, value in json.loads(part.read_text(encoding="utf-8")).items():
+                if isinstance(value, dict) and isinstance(data.get(key), dict):
+                    data[key].update(value)
+                else:
+                    data[key] = value
     links = '<a href="#method">Method ↓</a>' if "method" in keep else ""
 
     html = html.replace("<!-- COMPONENTS -->", body, 1)
     html = html.replace("<!-- TOPLINKS -->", links, 1)
-    html = html.replace("/* REPORT_DATA */", json.dumps(data, ensure_ascii=False, indent=1), 1)
+    data_file = args.output.with_name("report.data.json")
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(html, encoding="utf-8")
-    print(f"wrote {args.output} with {', '.join(keep)}")
-    print(f"next: edit the component HTML and the report-data JSON, then run {Path(__file__).with_name('build_report.py')} {args.output} -o <report.html>")
+    data_file.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
+    print(f"wrote {args.output} and {data_file.name} with {', '.join(keep)}")
+    print(f"next: edit the chapter text in {args.output.name}, rewrite {data_file.name}, then run {Path(__file__).with_name('build_report.py')} {args.output} -o <report.html>")
     return 0
 
 

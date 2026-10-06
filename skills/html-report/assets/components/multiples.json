@@ -1,0 +1,78 @@
+{
+ "diagrams": {
+  "failures": {
+   "kind": "multiples",
+   "items": [
+    {
+     "title": "The queue keeps moving",
+     "diagram": {
+      "kind": "split",
+      "left": "Queue",
+      "right": "After",
+      "items": [
+       "doc 1",
+       "doc 2",
+       "doc 3",
+       "doc 4",
+       "doc 5"
+      ],
+      "held": [
+       2
+      ],
+      "ok": "saved",
+      "hold": "held",
+      "aria": "Five documents. Document 3 is held. The other four save."
+     },
+     "caption": [
+      "doc 3 waits with its evidence",
+      "docs 1, 2, 4, and 5 save"
+     ]
+    },
+    {
+     "title": "Nothing saves in part",
+     "diagram": {
+      "kind": "parts",
+      "group": "One document",
+      "parts": [
+       "page 1",
+       "page 2",
+       "page 3"
+      ],
+      "bad": [
+       2
+      ],
+      "reject": [
+       "pages 1–2 alone",
+       "never save"
+      ],
+      "result": [
+       "whole document",
+       "held"
+      ],
+      "aria": "Page 3 fails, so the whole document is held."
+     },
+     "caption": [
+      "one failed page holds the document",
+      "no partial save"
+     ]
+    },
+    {
+     "title": "Retries never turn into a pass",
+     "diagram": {
+      "kind": "attempts",
+      "label": "Attempts",
+      "count": 3,
+      "fail": "each one fails",
+      "result": "held",
+      "note": "three tries do not save it",
+      "aria": "Three attempts fail. The document is held."
+     },
+     "caption": [
+      "three failures end in a hold",
+      "the attempt count is not approval"
+     ]
+    }
+   ]
+  }
+ }
+}

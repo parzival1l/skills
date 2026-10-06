@@ -113,6 +113,7 @@ h2{font-size:var(--text-h2);line-height:1.15;letter-spacing:-.03em;max-width:26c
 .dx-wide{overflow-x:auto}.dx-wide .dx{min-width:760px}
 .dx{display:block;width:100%;height:auto;overflow:visible}
 .dx text{font-family:var(--font-sans);font-size:15px;fill:var(--color-ink)}
+.dx text.halo{paint-order:stroke;stroke:var(--color-surface);stroke-width:8px;stroke-linejoin:round}
 .dx .lbl{font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;fill:var(--color-muted)}
 .dx .mono{font-family:var(--font-mono);font-size:13px}
 .dx .mut{fill:var(--color-muted)}

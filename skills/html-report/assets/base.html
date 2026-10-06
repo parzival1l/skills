@@ -25,14 +25,12 @@ try { const t = localStorage.getItem('report-theme'); if (t === 'light' || t ===
 <!-- COMPONENTS -->
 </main>
 
-<footer class="footer"><p>PROJECT · DATE<br>Built from recorded results.</p><p>Source link ↗<br>Run RUN_ID · no live calls</p></footer>
+<footer class="footer"><p>PROJECT · DATE<br>Built from recorded results.</p><p>Source link ↗<br>Run RUN_ID</p></footer>
 
 <dialog class="zoom-dialog" id="zoom-dialog"><header><span id="zoom-title"></span><button type="button" class="button-quiet" id="zoom-close">Close ×</button></header><img id="zoom-img" alt=""><div class="zoom-body" id="zoom-body" hidden></div></dialog>
 
-<!-- DATA: scripts/new_report.py fills this block from the component data. -->
-<script id="report-data" type="application/json">
-/* REPORT_DATA */
-</script>
+<!-- DATA: report.data.json holds the data. build_report.py puts it here. -->
+<script id="report-data" type="application/json" src="report.data.json"></script>
 
 <script src="report.js"></script>
 </body>

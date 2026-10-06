@@ -37,6 +37,59 @@ def data_uri(path: Path) -> str:
     return f"data:{mime};base64,{base64.b64encode(path.read_bytes()).decode()}"
 
 
+KINDS = {"route", "scope", "flow", "multiples", "split", "parts", "attempts", "brackets", "lanes"}
+SHORT = {"inputs", "lanes", "items", "groups", "parts", "label", "node", "gate", "end", "head", "group", "left", "right", "ok", "hold", "tabs", "tab", "last"}
+FREE = {"caption", "titles", "title", "aria", "kind"}
+VISUAL = ("data-diagram", "<svg", "<table", 'id="rule-map"', 'id="tile-grid"', 'id="strip-rows"', 'id="race-tracks"', "figure-pair")
+CHAPTER_WORDS = 60
+
+
+def words(text: str) -> int:
+    return len([w for w in text.split() if w not in ("·", "↳", "→")])
+
+
+def check(html: str, data: dict) -> list[str]:
+    """Warn when a chapter turns into text, or a diagram label turns into a sentence."""
+    notes = []
+    html = html.split('<script id="report-data"')[0]
+    for m in re.finditer(r'<section class="chapter"([^>]*)>(.*?)</section>', html, re.S):
+        attrs, body = m.groups()
+        if 'id="method"' in attrs or 'id="finding-grid"' in body:
+            continue
+        title = re.search(r"<h2[^>]*>(.*?)</h2>", body, re.S)
+        name = re.sub(r"<[^>]+>", "", title.group(1)).strip() if title else "a chapter"
+        if not any(v in body for v in VISUAL):
+            notes.append(f'chapter "{name}" has no diagram or table')
+        text = re.sub(r"<(svg|template|script)\b.*?</\1>", " ", body, flags=re.S)
+        count = words(re.sub(r"<[^>]+>", " ", text))
+        if count > CHAPTER_WORDS:
+            notes.append(f'chapter "{name}" has {count} words outside its diagram (limit {CHAPTER_WORDS}). Move the explanation into the diagram.')
+    diagrams = data.get("diagrams", {})
+    for key in re.findall(r'data-diagram="([^"]+)"', html):
+        if key not in diagrams:
+            notes.append(f'data-diagram="{key}" has no spec in report-data diagrams')
+
+    def walk(node, key, where):
+        if key in FREE:
+            return
+        if isinstance(node, dict):
+            if "kind" in node and node["kind"] not in KINDS:
+                notes.append(f'{where}: unknown kind "{node["kind"]}"')
+            for k, v in node.items():
+                walk(v, k, f"{where}.{k}")
+        elif isinstance(node, list):
+            for i, v in enumerate(node):
+                walk(v, key, f"{where}[{i}]")
+        elif isinstance(node, str):
+            limit = 4 if key in SHORT else 8
+            if words(node) > limit:
+                notes.append(f'{where} "{node}" has {words(node)} words (limit {limit}). Shorten it, or show it with a shape.')
+
+    for key, spec in diagrams.items():
+        walk(spec, "", f"diagrams.{key}")
+    return notes
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("source", type=Path)
@@ -82,6 +135,11 @@ def main() -> int:
         text = local_text(m.group(1))
         return f"<script>\n{text}</script>" if text is not None else m.group(0)
 
+    def data_file(m: re.Match) -> str:
+        text = local_text(m.group(1))
+        return f'<script id="report-data" type="application/json">{text}</script>' if text is not None else m.group(0)
+
+    html = re.sub(r"""<script id="report-data" type="application/json" src="([^"]+)"></script>""", data_file, html)
     # Shared CSS and scripts first, so their font urls get inlined below.
     html = re.sub(r"""<link rel="stylesheet" href="(?!https?:)([^"]+)">""", stylesheet, html)
     html = re.sub(r"""<script src="(?!https?:)([^"]+)"></script>""", script, html)
@@ -105,6 +163,8 @@ def main() -> int:
                 return inline(node) or node
             return node
 
+        for note in check(html, data):
+            print(f"warning: {note}", file=sys.stderr)
         payload = json.dumps(walk(data), ensure_ascii=False).replace("</", "<\\/")
         html = html[: block.start(2)] + payload + html[block.end(2):]
 

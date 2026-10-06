@@ -1,94 +1,78 @@
 {
+ "diagrams": {
   "flow": {
-    "start": "retry",
-    "cases": [
-      {
-        "id": "first",
-        "label": "Passes on attempt 1",
-        "path": [
-          "source",
-          "e1",
-          "parse",
-          "e2",
-          "read",
-          "e3",
-          "review",
-          "e4",
-          "gate",
-          "a1",
-          "e5",
-          "save"
-        ],
-        "marks": {
-          "read": "on",
-          "review": "on",
-          "a1": "on",
-          "e5": "ok",
-          "save": "ok"
-        },
-        "caption": "attempt 1 passes the gate · the whole document saves\nthe review is a separate call with its own response ID"
-      },
-      {
-        "id": "retry",
-        "label": "Passes on attempt 2",
-        "path": [
-          "source",
-          "e1",
-          "parse",
-          "e2",
-          "read",
-          "e3",
-          "review",
-          "e4",
-          "gate",
-          "a1",
-          "loop",
-          "a2",
-          "e5",
-          "save"
-        ],
-        "marks": {
-          "read": "on",
-          "review": "on",
-          "a1": "bad",
-          "loop": "bad",
-          "a2": "on",
-          "e5": "ok",
-          "save": "ok"
-        },
-        "caption": "attempt 1 fails the gate · attempt 2 passes · the whole document saves\nthe failed attempt sends exact feedback to the next one"
-      },
-      {
-        "id": "held",
-        "label": "Held after 3",
-        "path": [
-          "source",
-          "e1",
-          "parse",
-          "e2",
-          "read",
-          "e3",
-          "review",
-          "e4",
-          "gate",
-          "a1",
-          "loop",
-          "a2",
-          "a3",
-          "e6",
-          "held"
-        ],
-        "marks": {
-          "read": "on",
-          "review": "on",
-          "a1": "bad",
-          "a2": "bad",
-          "a3": "bad",
-          "loop": "bad",
-          "held": "held"
-        },
-        "caption": "three attempts fail the gate · the document is held\nthe evidence stays · the queue moves on"
-      }
-    ]
+   "kind": "flow",
+   "aria": "A source goes through parse, reader, review, and a gate. A failed gate loops back. Three failures hold the document.",
+   "steps": [
+    {
+     "id": "source",
+     "label": "Source",
+     "sub": "kept as-is",
+     "shape": "page"
+    },
+    {
+     "id": "parse",
+     "label": "Parse",
+     "sub": "same text for both"
+    },
+    {
+     "id": "read",
+     "label": "Reader answers",
+     "state": "on"
+    },
+    {
+     "id": "review",
+     "label": "Review",
+     "sub": "separate call",
+     "shape": "review",
+     "state": "on"
+    },
+    {
+     "id": "gate",
+     "label": "Gate",
+     "shape": "gate"
+    },
+    {
+     "id": "save",
+     "label": "Save",
+     "sub": "whole document"
+    }
+   ],
+   "loop": {
+    "to": "read",
+    "note": "fails · exact feedback goes to a new attempt"
+   },
+   "held": "held · evidence kept",
+   "attempts": 3,
+   "start": 1,
+   "cases": [
+    {
+     "tab": "Passes on attempt 1",
+     "fails": 0,
+     "reach": "end",
+     "caption": [
+      "attempt 1 passes the gate · the whole document saves"
+     ]
+    },
+    {
+     "tab": "Passes on attempt 2",
+     "fails": 1,
+     "reach": "end",
+     "caption": [
+      "attempt 1 fails the gate · attempt 2 passes",
+      "the failed attempt sends exact feedback to the next one"
+     ]
+    },
+    {
+     "tab": "Held after 3",
+     "fails": 3,
+     "reach": "held",
+     "caption": [
+      "three attempts fail the gate · the document is held",
+      "the evidence stays · the queue moves on"
+     ]
+    }
+   ]
   }
+ }
 }

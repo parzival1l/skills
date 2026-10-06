@@ -1,0 +1,59 @@
+{
+ "diagrams": {
+  "scope": {
+   "kind": "scope",
+   "tabs": [
+    "Reader v1",
+    "Reader v2"
+   ],
+   "title": "Pump specifications",
+   "groups": [
+    "Model",
+    "Model",
+    "Model"
+   ],
+   "values": [
+    [
+     "EW-15",
+     "EW-25",
+     "EW-35"
+    ],
+    [
+     "0.5 L/min",
+     "1.2 L/min",
+     "2.0 L/min"
+    ]
+   ],
+   "last": "Notes",
+   "focus": 1,
+   "notes": {
+    "a": [
+     "Model reaches",
+     "the notes row"
+    ],
+    "b": [
+     "Each scope ends",
+     "above the notes"
+    ],
+    "last": [
+     "Keeps the",
+     "table title"
+    ]
+   },
+   "caption": {
+    "a": [
+     "top headings applied to every row",
+     "the notes row gets a label that it never had"
+    ],
+    "b": [
+     "three cells · same word · three scopes",
+     "each heading covers only its own column"
+    ]
+   },
+   "aria": [
+    "Reader v1: the Model headings spread into the notes row.",
+    "Reader v2: each Model heading covers only its own rows."
+   ]
+  }
+ }
+}

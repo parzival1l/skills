@@ -1,26 +1,10 @@
-<!-- COMPONENT: method · A bracket diagram of what the results cover, then the limits. -->
+<!-- COMPONENT: method · A bracket diagram of what the results cover, then the limits and the sources. Spec: kind "brackets". -->
 <section class="chapter" id="method" aria-labelledby="method-title">
   <div class="chapter-heading">
     <div><p class="eyebrow">Method</p><h2 id="method-title">How we measured these results</h2></div>
     <span class="tag">One run · no retries</span>
   </div>
-  <!-- Bracket diagram: a process with brackets that say what each part covers. Static. -->
-  <div class="explainer bare" data-expand>
-    <div class="dx-wide">
-      <svg class="dx" viewBox="0 0 1144 200" role="img" aria-label="Documents go to one parse step, then to both readers, then to scoring. The results measure the readers and the scoring. They do not measure the parse step.">
-        <g><text class="lbl" x="80" y="20" text-anchor="middle">24 DOCUMENTS</text><rect class="page" x="56" y="40" width="48" height="60" rx="3"/><line class="tick" x1="64" y1="56" x2="96" y2="56"/><line class="tick" x1="64" y1="64" x2="88" y2="64"/><line class="tick" x1="64" y1="72" x2="96" y2="72"/></g>
-        <line class="line" x1="120" y1="70" x2="214" y2="70"/><path class="tip" d="M220 70l-7-4v8z"/>
-        <g><text class="lbl" x="260" y="20" text-anchor="middle">PARSE ONCE</text><circle class="ring" cx="260" cy="70" r="12"/></g>
-        <line class="line" x1="284" y1="70" x2="434" y2="70"/><path class="tip" d="M440 70l-7-4v8z"/>
-        <g><text class="lbl" x="490" y="20" text-anchor="middle">BOTH READERS</text><circle class="dot" cx="476" cy="70" r="10"/><circle class="ring" cx="504" cy="70" r="10" style="fill:var(--color-secondary);stroke:var(--color-secondary)"/></g>
-        <line class="line" x1="526" y1="70" x2="674" y2="70"/><path class="tip" d="M680 70l-7-4v8z"/>
-        <g><text class="lbl" x="700" y="20" text-anchor="middle">SCORE</text><path class="gate" d="M700 52L718 70L700 88L682 70Z"/><text x="740" y="64">fixed answer key</text><text class="mut" x="740" y="84">one person labeled it</text></g>
-        <g><path class="bracket-b" d="M200 116v10h120v-10"/><text class="held-t" x="260" y="154" text-anchor="middle">Not measured</text><text class="mut" x="260" y="174" text-anchor="middle">parse time is outside the results</text></g>
-        <g><path class="bracket-a" d="M440 116v10h290v-10"/><text class="on-t" x="585" y="154" text-anchor="middle">Measured</text><text class="mut" x="585" y="174" text-anchor="middle">time and correctness for each reader</text></g>
-      </svg>
-    </div>
-  </div>
-  </div>
+  <div class="explainer bare" data-diagram="coverage" data-expand></div>
   <div class="method-grid">
     <div><h3>What we measured</h3><p>We ran each task one time, with no retries. The times do not include the parse step.</p></div>
     <div><h3>What these results do not show</h3><p>The sample is small. One person labeled the answers. We did not test scanned pages.</p></div>

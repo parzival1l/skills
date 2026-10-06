@@ -8,59 +8,62 @@ Ask: **what changes, and between which states?** The answer picks the component.
 
 | Id | Shows | Use when |
 |---|---|---|
-| `hero` | Headline, summary, optional stat rail, scorecards, and one notice | Always. It opens the page. |
-| `routes` | The same inputs drawn twice, old and new, with tabs for each view | Inputs take a different route after a change |
-| `scope` | One grid drawn twice, with tinted areas where a label applies | A label, heading, or rule leaks where it shouldn't |
-| `flow` | A process with a gate, a retry loop, and a held branch, with tabs for each case | A process with checks, retries, and outcomes |
-| `multiples` | Three small diagrams, one idea each | Two or three separate rules that each need a small proof |
-| `rules` | Short rule names in grouped columns. Selecting one shows what it accepts and rejects. | A list of rules, contracts, or requirements |
+| `hero` | Headline, summary, optional stat rail, scorecards, one notice | Always. It opens the page. |
+| `routes` | The same inputs drawn twice: through one node, then each in its own lane | Inputs take a different route after a change |
+| `scope` | One grid drawn twice: a heading leaks into the last row, then stays in its scope | A label, heading, or rule applies where it shouldn't |
+| `flow` | Steps, a gate, a retry loop, and a held branch. Tabs pick the case. | A process with checks, retries, and outcomes |
+| | `dots`: draw a step as N small rings, for a step with its own tries. `state`: `on` marks a step blue in every case. `loop.to`: the step id that a failed gate returns to. `attempts`: the gate's try count. `start`: the case index shown on load. Exactly one step has `shape: gate`. |
+| `multiples` | Two to four small diagrams side by side | Separate rules that each need a small proof |
+| `rules` | Short rule names in groups. Selecting one shows what it accepts and rejects. | A list of rules, contracts, or requirements |
 | `compare` | The same fields from two sources, with "Show only differences" | Two runs, two engines, before and after |
 | `speed` | Bars for recorded time, and a cost breakdown | Measured time or cost for two engines |
 | `grid` | One tile per item, with a detail box | Many items with the same two or three fields |
 | `strips` | Page ranges or spans per source | Ranges from several sources |
 | `findings` | Before and after for each bug, with a picker | Bugs, regressions, incidents |
 | `spotlight` | One real case with images that expand | One case explains the main result |
-| `method` | A bracket diagram of what the results cover, then the limits | Always. It closes the page. |
+| `lanes` | Two lanes with a gate: who approves, then who builds | Next steps, ownership, approvals |
+| `method` | Brackets under a row of steps: what the results cover and what they don't | Always. It closes the page. |
 
-**A proposal** usually takes `hero, routes, scope or flow, multiples, rules, method`, with no stat rail.
+**A proposal** usually takes `hero, routes, scope, flow, multiples, rules, lanes, method`. No stat rail.
 **A benchmark** usually takes `hero, routes, compare, speed, grid, method`.
 **A failure report** usually takes `hero, findings, method`.
 
-## Draw with these parts
+## Diagrams are JSON
 
-Every diagram is an `<svg class="dx">` with a `viewBox`. Use 520 wide for a half-width view, 340 for a small multiple, and 1088 for a full panel. Wrap anything wider than 700 in `<div class="dx-wide">`, so it scrolls inside its box on a phone.
+Don't write SVG. A diagram is a spec in `report.data.json` under `diagrams`. The page draws it.
 
-| Class | Draws |
+```html
+<div class="explainer" data-diagram="routes" data-expand></div>
+```
+
+```json
+"diagrams": { "routes": { "kind": "route", ... } }
+```
+
+The specs in your `report.data.json` already work. Change their words and counts. Every kind takes `aria` (one sentence that states the finding) and `caption` (one or two short lines).
+
+| Kind | Spec |
 |---|---|
-| `group` | Dashed box around a set of inputs |
-| `box` | Small square: one item in a set |
-| `ring` | Outline circle or rectangle: a step, a document, an attempt |
-| `dot` + `pip` | Filled accent circle: the admitted or chosen item |
-| `okc` / `badc` / `heldc` | Passed (filled green) / rejected (red outline) / held (dashed amber) |
-| `gate` | Diamond: a check |
-| `node` | Filled square: a shared step every input goes through |
-| `page` | Outline rectangle: a source document |
-| `line`, `tip` | Connector and arrowhead. Add `dash` for a loop back or a path not taken. |
-| `scope`, `scope focus`, `spill` | Tinted area where something applies, the one in focus, and where it leaks |
-| `bracket-a` / `bracket-b` | Bracket under a range: covered (accent) / not covered (amber) |
-| `lbl` | 12px mono label. Write it in capitals. |
-| `mut`, `on-t`, `bad-t`, `ok-t`, `held-t`, `mono` | Text styles |
+| `route` | `tabs` [a, b], `titles` [a, b], `group`, `inputs` [3 to 6], `before` {`node`, `sub`, `bad` [indexes], `notes` [lines]}, `after` {`head`, `lanes` [one per input], `bad` [indexes], `gate`, `end`}, `caption` {`a`, `b`} |
+| `scope` | `tabs`, `title`, `groups` [headings], `values` [rows of one value per group], `last` (the row below), `focus` (index), `notes` {`a`, `b`, `last`}, `caption` {`a`, `b`} |
+| `flow` | `steps` [{`id`, `label`, `sub`, `shape`: page, ring, review, or gate, `dots`, `state`}], `loop` {`to`, `note`}, `held`, `attempts`, `start`, `cases` [{`tab`, `fails`, `reach`: end or held, `caption`}] |
+| | `dots`: draw a step as N small rings, for a step with its own tries. `state`: `on` marks a step blue in every case. `loop.to`: the step id that a failed gate returns to. `attempts`: the gate's try count. `start`: the case index shown on load. Exactly one step has `shape: gate`. |
+| `multiples` | `items` [{`title`, `diagram`, `caption`}]. Each `diagram` is `split`, `parts`, or `attempts`. |
+| `split` | `left`, `right`, `items`, `held` [indexes], `ok`, `hold` |
+| `parts` | `group`, `parts`, `bad` [indexes], `reject` [lines], `result` [lines] |
+| `attempts` | `label`, `count`, `fail`, `result`, `note` |
+| `lanes` | `lanes` [{`label`, `items`}, {`label`, `items`}], `gate`, `end` |
+| `brackets` | `steps` [{`label`, `shape`: page, ring, dot, pair, or gate, `note`}], `brackets` [{`from`, `to`, `label`, `note`, `tone`: on or held}] |
 
-Put a state on a `<g>` to color everything inside it: `is-on`, `is-bad`, `is-ok`, or `is-held`.
+**Labels are one to four words.** Notes and captions are eight words or fewer per line. The build warns when a label grows into a sentence. When that happens, show the idea with a shape, a state, or a second diagram.
 
-**One accent per diagram.** Most parts stay neutral. Color marks only what the finding is about.
+If no kind fits, pick the closest one and say so in your summary. Don't hand-write SVG.
 
 ## What moves
 
-- **Tabs.** `data-views` on an explainer gives it view tabs (a, b, both). `flow` cases come from `data.flow`.
-- **Expand.** `data-expand` on an explainer or a figure adds an Expand button. Clicking the diagram also opens it large.
+- **Tabs.** `route` and `scope` get a/b/both tabs. `flow` gets one tab per case.
+- **Expand.** `data-expand` adds an Expand button. Clicking a diagram also opens it large.
 - **Scrolling tables.** Wrap a long table in `<div class="table-scroll">`. The header row stays put.
-- **Rule detail.** A rule can show figures. Put an SVG in `<template id="RULE-accepts">` and `<template id="RULE-rejects">`.
+- **Rule detail.** A rule can show figures: `<template id="RULE-accepts">` and `<template id="RULE-rejects">`. Figures are optional. Keep a sample figure only if it fits a rule as it is, and rename its id. Otherwise delete the templates. Don't draw new ones.
 
 Nothing else moves.
-
-## Captions and labels
-
-- A caption has one or two lines. The first names what the diagram shows. The second starts with `↳` and names the result.
-- Every SVG gets `role="img"` and an `aria-label` that states its finding in one sentence.
-- Tag a drawing that isn't a real page as "Concept diagram".

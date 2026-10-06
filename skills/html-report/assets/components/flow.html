@@ -1,36 +1,9 @@
-<!-- COMPONENT: flow · A process with a gate, a retry loop, and a held branch. Tabs choose the case. -->
+<!-- COMPONENT: flow · A process with a gate, a retry loop, and a held branch. Tabs choose the case. Spec: kind "flow". -->
 <section class="chapter" aria-labelledby="flow-title">
   <div class="chapter-heading">
-    <div><p class="eyebrow">One document</p><h2 id="flow-title">A page must pass the gate before the document saves</h2><p class="lede">The reader answers in one call and a review checks it in a second call. A failed check sends exact feedback to a new attempt.</p></div>
+    <div><p class="eyebrow">One document</p><h2 id="flow-title">A page must pass the gate before the document saves</h2><p class="lede">A review checks each answer in a second call. A failed check sends exact feedback to a new attempt.</p></div>
     <span class="tag">3 attempts at most</span>
   </div>
-  <div class="explainer" data-expand>
-    <div class="explainer-bar">
-      <div class="tabs" id="flow-cases" aria-label="Choose a case"></div>
-    </div>
-    <div class="dx-wide">
-      <svg class="dx stepper" id="flow" viewBox="0 0 1088 270" role="img" aria-labelledby="flow-caption">
-        <g data-node="source"><text class="lbl" x="48" y="32" text-anchor="middle">SOURCE</text><rect class="page" x="30" y="56" width="36" height="46" rx="3"/><line class="tick" x1="38" y1="70" x2="58" y2="70"/><line class="tick" x1="38" y1="78" x2="58" y2="78"/><line class="tick" x1="38" y1="86" x2="52" y2="86"/><text class="mut" x="48" y="132" text-anchor="middle">kept as-is</text></g>
-        <g data-node="e1"><line class="line" x1="80" y1="80" x2="144" y2="80"/><path class="tip" d="M150 80l-7-4v8z"/></g>
-        <g data-node="parse"><text class="lbl" x="200" y="32" text-anchor="middle">PARSE</text><circle class="ring" cx="200" cy="80" r="12"/><text class="mut" x="200" y="132" text-anchor="middle">same text for both</text></g>
-        <g data-node="e2"><line class="line" x1="224" y1="80" x2="334" y2="80"/><path class="tip" d="M340 80l-7-4v8z"/></g>
-        <g data-node="read"><text class="lbl" x="380" y="32" text-anchor="middle">READER ANSWERS</text><circle class="ring" cx="380" cy="80" r="12"/></g>
-        <g data-node="e3"><line class="line" x1="404" y1="80" x2="494" y2="80"/><path class="tip" d="M500 80l-7-4v8z"/></g>
-        <g data-node="review"><text class="lbl" x="540" y="32" text-anchor="middle">REVIEW</text><circle class="ring" cx="540" cy="80" r="12"/><text class="mut" x="540" y="132" text-anchor="middle">separate call</text></g>
-        <g data-node="e4"><line class="line" x1="564" y1="80" x2="674" y2="80"/><path class="tip" d="M680 80l-7-4v8z"/></g>
-        <g data-node="gate"><text class="lbl" x="700" y="32" text-anchor="middle">GATE</text><path class="gate" d="M700 62L718 80L700 98L682 80Z"/></g>
-        <g data-node="e5"><line class="line" x1="722" y1="80" x2="864" y2="80"/><path class="tip" d="M870 80l-7-4v8z"/></g>
-        <g data-node="save"><text class="lbl" x="894" y="32" text-anchor="middle">SAVE</text><circle class="ring" cx="894" cy="80" r="12"/><text class="mut" x="894" y="132" text-anchor="middle">whole document</text></g>
-        <g data-node="loop"><path class="line dash" d="M700 100V196H380V100"/><path class="tip" d="M380 94l-4 8h8z"/><text class="mut" x="540" y="224" text-anchor="middle">fails · exact feedback goes to a new attempt</text></g>
-        <g data-node="e6"><path class="line dash" d="M710 92L770 170H806"/></g>
-        <g data-node="held"><circle class="ring" cx="820" cy="170" r="10"/><text class="mut" x="840" y="175">held · evidence kept</text></g>
-        <text class="lbl" x="240" y="256" text-anchor="end">ATTEMPT</text>
-        <g data-node="a1"><circle class="ring" cx="270" cy="252" r="9"/><text class="num-t" x="270" y="256" text-anchor="middle">1</text></g>
-        <g data-node="a2"><circle class="ring" cx="300" cy="252" r="9"/><text class="num-t" x="300" y="256" text-anchor="middle">2</text></g>
-        <g data-node="a3"><circle class="ring" cx="330" cy="252" r="9"/><text class="num-t" x="330" y="256" text-anchor="middle">3</text></g>
-      </svg>
-    </div>
-    <p class="caption" id="flow-caption"></p>
-  </div>
+  <div class="explainer" data-diagram="flow" data-expand></div>
 </section>
 <!-- END: flow -->

@@ -126,6 +126,7 @@ h2{font-size:var(--text-h2);line-height:1.15;letter-spacing:-.03em;max-width:26c
 .dx-wide{overflow-x:auto}.dx-wide .dx{min-width:760px}
 .dx{display:block;width:100%;height:auto;overflow:visible}
 .dx text{font-family:var(--font-sans);font-size:15px;fill:var(--color-ink)}
+.dx text.halo{paint-order:stroke;stroke:var(--color-surface);stroke-width:8px;stroke-linejoin:round}
 .dx .lbl{font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;fill:var(--color-muted)}
 .dx .mono{font-family:var(--font-mono);font-size:13px}
 .dx .mut{fill:var(--color-muted)}
@@ -355,101 +356,22 @@ details p{font-size:var(--text-small);line-height:1.65;color:var(--color-muted);
 </section>
 <!-- END: hero -->
 
-<!-- COMPONENT: routes · The same inputs drawn twice, old and new. Tabs choose the view. -->
+<!-- COMPONENT: routes · The same inputs drawn twice, old and new. Tabs choose the view. Spec: diagrams.routes, kind "route". -->
 <section class="chapter" aria-labelledby="routes-title">
   <div class="chapter-heading">
-    <div><p class="eyebrow">How it works</p><h2 id="routes-title">Reader v2 sends each page type to its own reader</h2><p class="lede">Reader v1 reads every page with one prompt. Reader v2 picks a reader for each page type, then checks every answer.</p></div>
+    <div><p class="eyebrow">How it works</p><h2 id="routes-title">Reader v2 sends each page type to its own reader</h2><p class="lede">Reader v1 reads every page with one prompt. Reader v2 picks a reader for each type.</p></div>
   </div>
-  <div class="explainer" data-views data-view="both" data-expand>
-    <div class="explainer-bar">
-      <div class="tabs views-toggle" aria-label="Choose view"><button type="button" data-view="a" aria-pressed="false">Reader v1</button><button type="button" data-view="b" aria-pressed="false">Reader v2</button><button type="button" data-view="both" aria-pressed="true">Side by side</button></div>
-    </div>
-    <div class="views">
-      <figure class="view a" style="margin:0">
-        <h3>Reader v1 reads every page with one prompt</h3>
-        <svg class="dx" viewBox="0 0 520 250" role="img" aria-label="Four page types go into one prompt. The datasheet comes out as a manual.">
-          <text class="lbl" x="8" y="18">PAGES</text>
-          <rect class="group" x="4" y="34" width="210" height="200" rx="8"/>
-          <g><text x="20" y="71">Manual page</text><rect class="box" x="188" y="60" width="12" height="12" rx="2"/><line class="line" x1="214" y1="66" x2="300" y2="133"/></g>
-          <g class="is-bad"><text x="20" y="116">Datasheet</text><rect class="box" x="188" y="105" width="12" height="12" rx="2"/><line class="line" x1="214" y1="111" x2="300" y2="133"/></g>
-          <g><text x="20" y="161">Notice</text><rect class="box" x="188" y="150" width="12" height="12" rx="2"/><line class="line" x1="214" y1="156" x2="300" y2="133"/></g>
-          <g><text x="20" y="206">Form</text><rect class="box" x="188" y="195" width="12" height="12" rx="2"/><line class="line" x1="214" y1="201" x2="300" y2="133"/></g>
-          <rect class="node" x="300" y="113" width="40" height="40" rx="4"/><line class="tick" x1="308" y1="126" x2="332" y2="126"/><line class="tick" x1="308" y1="133" x2="332" y2="133"/><line class="tick" x1="308" y1="140" x2="332" y2="140"/>
-          <text class="lbl" x="320" y="100" text-anchor="middle">ONE PROMPT</text><text class="lbl" x="320" y="176" text-anchor="middle">EVERY PAGE</text>
-          <line class="line" x1="348" y1="133" x2="384" y2="133"/><path class="tip" d="M390 133l-7-4v8z"/>
-          <g><text class="bad-t" x="400" y="128">Datasheet read</text><text class="bad-t" x="400" y="146">as a manual</text></g>
-        </svg>
-        <p class="caption">one prompt for every page type<br>↳ red: the page that Reader v1 gets wrong</p>
-      </figure>
-      <figure class="view b" style="margin:0">
-        <h3>Reader v2 picks a reader for each page type</h3>
-        <svg class="dx" viewBox="0 0 520 250" role="img" aria-label="Each page type goes to its own reader, then to one check, then to the saved result. The notice comes out as a form.">
-          <text class="lbl" x="8" y="18">PAGES</text><text class="lbl" x="266" y="18">READER</text>
-          <rect class="group" x="4" y="34" width="210" height="200" rx="8"/>
-          <g class="is-on"><text x="20" y="71">Manual page</text><rect class="box" x="188" y="60" width="12" height="12" rx="2"/><line class="line" x1="214" y1="66" x2="238" y2="66"/><circle class="dot" cx="250" cy="66" r="8"/><circle class="pip" cx="250" cy="66" r="2.4"/><text class="on-t" x="266" y="71">manual</text><line class="line" x1="340" y1="66" x2="422" y2="133"/></g>
-          <g class="is-on"><text x="20" y="116">Datasheet</text><rect class="box" x="188" y="105" width="12" height="12" rx="2"/><line class="line" x1="214" y1="111" x2="238" y2="111"/><circle class="dot" cx="250" cy="111" r="8"/><circle class="pip" cx="250" cy="111" r="2.4"/><text class="on-t" x="266" y="116">datasheet</text><line class="line" x1="350" y1="111" x2="422" y2="133"/></g>
-          <g class="is-bad"><text x="20" y="161">Notice</text><rect class="box" x="188" y="150" width="12" height="12" rx="2"/><line class="line" x1="214" y1="156" x2="238" y2="156"/><circle class="dot" cx="250" cy="156" r="8"/><circle class="pip" cx="250" cy="156" r="2.4"/><text class="bad-t" x="266" y="161">read as form</text><line class="line" x1="370" y1="156" x2="422" y2="133"/></g>
-          <g class="is-on"><text x="20" y="206">Form</text><rect class="box" x="188" y="195" width="12" height="12" rx="2"/><line class="line" x1="214" y1="201" x2="238" y2="201"/><circle class="dot" cx="250" cy="201" r="8"/><circle class="pip" cx="250" cy="201" r="2.4"/><text class="on-t" x="266" y="206">form</text><line class="line" x1="320" y1="201" x2="422" y2="133"/></g>
-          <path class="gate" d="M436 119L450 133L436 147L422 133Z"/><text class="lbl" x="436" y="174" text-anchor="middle">CHECK</text>
-          <line class="line" x1="454" y1="133" x2="482" y2="133"/><path class="tip" d="M488 133l-7-4v8z"/>
-          <circle class="okc" cx="502" cy="133" r="8"/><text class="lbl" x="514" y="108" text-anchor="end">SAVE</text>
-        </svg>
-        <p class="caption">four readers · one check<br>↳ red: the page that Reader v2 still gets wrong</p>
-      </figure>
-    </div>
-  </div>
+  <div class="explainer" data-diagram="routes" data-expand></div>
 </section>
 <!-- END: routes -->
 
-<!-- COMPONENT: scope · One grid drawn twice. Tinted areas show where a label applies and where it leaks. -->
+<!-- COMPONENT: scope · One grid drawn twice. Tinted areas show where a label applies and where it leaks. Spec: kind "scope". -->
 <section class="chapter" aria-labelledby="scope-title">
   <div class="chapter-heading">
-    <div><p class="eyebrow">Table headings</p><h2 id="scope-title">Reader v2 keeps a local heading inside its own rows</h2><p class="lede">Each "Model" heading covers two columns. Reader v1 spreads all three into the notes row below the table.</p></div>
+    <div><p class="eyebrow">Table headings</p><h2 id="scope-title">Reader v2 keeps a local heading inside its own rows</h2><p class="lede">Each "Model" heading covers its own column. Reader v1 spreads them into the notes row.</p></div>
     <span class="tag">Concept diagram</span>
   </div>
-  <div class="explainer" data-views data-view="both" data-expand>
-    <div class="explainer-bar">
-      <div class="tabs views-toggle" aria-label="Choose view"><button type="button" data-view="a" aria-pressed="false">Reader v1</button><button type="button" data-view="b" aria-pressed="false">Reader v2</button><button type="button" data-view="both" aria-pressed="true">Side by side</button></div>
-    </div>
-    <div class="views">
-      <figure class="view a" style="margin:0">
-        <svg class="dx" viewBox="0 0 520 240" role="img" aria-label="Reader v1: the three Model headings spread into the notes row.">
-          <text class="lbl" x="8" y="18">READER V1</text>
-          <g><rect class="scope" x="7" y="75" width="118" height="146" rx="3"/></g>
-          <g><rect class="scope focus" x="131" y="75" width="118" height="146" rx="3"/></g>
-          <g><rect class="scope" x="255" y="75" width="118" height="146" rx="3"/></g>
-          <rect class="spill" x="7" y="189" width="366" height="32" rx="3"/>
-          <rect class="box" x="4" y="34" width="372" height="190"/><line class="line" x1="4" y1="72" x2="376" y2="72"/><line class="line" x1="4" y1="110" x2="376" y2="110"/><line class="line" x1="4" y1="148" x2="376" y2="148"/><line class="line" x1="4" y1="186" x2="376" y2="186"/>
-          <line class="line" x1="128" y1="72" x2="128" y2="186"/><line class="line" x1="252" y1="72" x2="252" y2="186"/>
-          <text x="190" y="58" text-anchor="middle">Pump specifications</text>
-          <text class="on-t" x="66" y="96" text-anchor="middle">Model</text><text class="on-t" x="190" y="96" text-anchor="middle">Model</text><text class="on-t" x="314" y="96" text-anchor="middle">Model</text>
-          <text class="mono mut" x="66" y="134" text-anchor="middle">EW-15</text><text class="mono mut" x="190" y="134" text-anchor="middle">EW-25</text><text class="mono mut" x="314" y="134" text-anchor="middle">EW-35</text>
-          <text class="mono mut" x="66" y="172" text-anchor="middle">0.5 L/min</text><text class="mono mut" x="190" y="172" text-anchor="middle">1.2 L/min</text><text class="mono mut" x="314" y="172" text-anchor="middle">2.0 L/min</text>
-          <text class="bad-t" x="190" y="210" text-anchor="middle">Notes · labeled Model</text>
-          <line class="line" x1="384" y1="205" x2="398" y2="205" style="stroke:var(--color-warn)"/><text class="bad-t" x="404" y="200">Model reaches</text><text class="bad-t" x="404" y="217">the notes row</text>
-        </svg>
-        <p class="caption">top headings applied to every row<br>↳ the notes row gets a label that it never had</p>
-      </figure>
-      <figure class="view b" style="margin:0">
-        <svg class="dx" viewBox="0 0 520 240" role="img" aria-label="Reader v2: each Model heading covers only its own rows. The notes row keeps the table title.">
-          <text class="lbl" x="8" y="18">READER V2</text>
-          <g><rect class="scope" x="7" y="75" width="118" height="108" rx="3"/></g>
-          <g><rect class="scope focus" x="131" y="75" width="118" height="108" rx="3"/></g>
-          <g><rect class="scope" x="255" y="75" width="118" height="108" rx="3"/></g>
-          <rect class="box" x="4" y="34" width="372" height="190"/><line class="line" x1="4" y1="72" x2="376" y2="72"/><line class="line" x1="4" y1="110" x2="376" y2="110"/><line class="line" x1="4" y1="148" x2="376" y2="148"/><line class="line" x1="4" y1="186" x2="376" y2="186"/>
-          <line class="line" x1="128" y1="72" x2="128" y2="186"/><line class="line" x1="252" y1="72" x2="252" y2="186"/>
-          <text x="190" y="58" text-anchor="middle">Pump specifications</text>
-          <text class="on-t" x="66" y="96" text-anchor="middle">Model</text><text class="on-t" x="190" y="96" text-anchor="middle">Model</text><text class="on-t" x="314" y="96" text-anchor="middle">Model</text>
-          <text class="mono mut" x="66" y="134" text-anchor="middle">EW-15</text><text class="mono mut" x="190" y="134" text-anchor="middle">EW-25</text><text class="mono mut" x="314" y="134" text-anchor="middle">EW-35</text>
-          <text class="mono mut" x="66" y="172" text-anchor="middle">0.5 L/min</text><text class="mono mut" x="190" y="172" text-anchor="middle">1.2 L/min</text><text class="mono mut" x="314" y="172" text-anchor="middle">2.0 L/min</text>
-          <text x="190" y="210" text-anchor="middle">Notes</text>
-          <path class="bracket-a" d="M386 79h8v100h-8"/><text class="on-t" x="402" y="122">Each scope ends</text><text class="on-t" x="402" y="140">above the notes</text>
-          <text x="402" y="200">Keeps the</text><text x="402" y="217">table title</text>
-        </svg>
-        <p class="caption">three cells · same word · three scopes<br>↳ each heading covers only its own two columns</p>
-      </figure>
-    </div>
-  </div>
+  <div class="explainer" data-diagram="scope" data-expand></div>
 </section>
 <!-- END: scope -->
 
@@ -478,98 +400,22 @@ details p{font-size:var(--text-small);line-height:1.65;color:var(--color-muted);
 <template id="R4-rejects"><svg class="dx" viewBox="0 0 200 100" role="img" aria-label="A heading scope that spills into the last row."><rect class="scope focus" x="76" y="30" width="68" height="64" rx="2"/><rect class="spill" x="7" y="75" width="186" height="18" rx="2"/><rect class="box" x="4" y="8" width="192" height="88"/><line class="line" x1="4" y1="28" x2="196" y2="28"/><line class="line" x1="4" y1="50" x2="196" y2="50"/><line class="line" x1="4" y1="72" x2="196" y2="72"/><line class="line" x1="68" y1="28" x2="68" y2="72"/><line class="line" x1="132" y1="28" x2="132" y2="72"/></svg></template>
 <!-- END: rules -->
 
-<!-- COMPONENT: flow · A process with a gate, a retry loop, and a held branch. Tabs choose the case. -->
+<!-- COMPONENT: flow · A process with a gate, a retry loop, and a held branch. Tabs choose the case. Spec: kind "flow". -->
 <section class="chapter" aria-labelledby="flow-title">
   <div class="chapter-heading">
-    <div><p class="eyebrow">One document</p><h2 id="flow-title">A page must pass the gate before the document saves</h2><p class="lede">The reader answers in one call and a review checks it in a second call. A failed check sends exact feedback to a new attempt.</p></div>
+    <div><p class="eyebrow">One document</p><h2 id="flow-title">A page must pass the gate before the document saves</h2><p class="lede">A review checks each answer in a second call. A failed check sends exact feedback to a new attempt.</p></div>
     <span class="tag">3 attempts at most</span>
   </div>
-  <div class="explainer" data-expand>
-    <div class="explainer-bar">
-      <div class="tabs" id="flow-cases" aria-label="Choose a case"></div>
-    </div>
-    <div class="dx-wide">
-      <svg class="dx stepper" id="flow" viewBox="0 0 1088 270" role="img" aria-labelledby="flow-caption">
-        <g data-node="source"><text class="lbl" x="48" y="32" text-anchor="middle">SOURCE</text><rect class="page" x="30" y="56" width="36" height="46" rx="3"/><line class="tick" x1="38" y1="70" x2="58" y2="70"/><line class="tick" x1="38" y1="78" x2="58" y2="78"/><line class="tick" x1="38" y1="86" x2="52" y2="86"/><text class="mut" x="48" y="132" text-anchor="middle">kept as-is</text></g>
-        <g data-node="e1"><line class="line" x1="80" y1="80" x2="144" y2="80"/><path class="tip" d="M150 80l-7-4v8z"/></g>
-        <g data-node="parse"><text class="lbl" x="200" y="32" text-anchor="middle">PARSE</text><circle class="ring" cx="200" cy="80" r="12"/><text class="mut" x="200" y="132" text-anchor="middle">same text for both</text></g>
-        <g data-node="e2"><line class="line" x1="224" y1="80" x2="334" y2="80"/><path class="tip" d="M340 80l-7-4v8z"/></g>
-        <g data-node="read"><text class="lbl" x="380" y="32" text-anchor="middle">READER ANSWERS</text><circle class="ring" cx="380" cy="80" r="12"/></g>
-        <g data-node="e3"><line class="line" x1="404" y1="80" x2="494" y2="80"/><path class="tip" d="M500 80l-7-4v8z"/></g>
-        <g data-node="review"><text class="lbl" x="540" y="32" text-anchor="middle">REVIEW</text><circle class="ring" cx="540" cy="80" r="12"/><text class="mut" x="540" y="132" text-anchor="middle">separate call</text></g>
-        <g data-node="e4"><line class="line" x1="564" y1="80" x2="674" y2="80"/><path class="tip" d="M680 80l-7-4v8z"/></g>
-        <g data-node="gate"><text class="lbl" x="700" y="32" text-anchor="middle">GATE</text><path class="gate" d="M700 62L718 80L700 98L682 80Z"/></g>
-        <g data-node="e5"><line class="line" x1="722" y1="80" x2="864" y2="80"/><path class="tip" d="M870 80l-7-4v8z"/></g>
-        <g data-node="save"><text class="lbl" x="894" y="32" text-anchor="middle">SAVE</text><circle class="ring" cx="894" cy="80" r="12"/><text class="mut" x="894" y="132" text-anchor="middle">whole document</text></g>
-        <g data-node="loop"><path class="line dash" d="M700 100V196H380V100"/><path class="tip" d="M380 94l-4 8h8z"/><text class="mut" x="540" y="224" text-anchor="middle">fails · exact feedback goes to a new attempt</text></g>
-        <g data-node="e6"><path class="line dash" d="M710 92L770 170H806"/></g>
-        <g data-node="held"><circle class="ring" cx="820" cy="170" r="10"/><text class="mut" x="840" y="175">held · evidence kept</text></g>
-        <text class="lbl" x="240" y="256" text-anchor="end">ATTEMPT</text>
-        <g data-node="a1"><circle class="ring" cx="270" cy="252" r="9"/><text class="num-t" x="270" y="256" text-anchor="middle">1</text></g>
-        <g data-node="a2"><circle class="ring" cx="300" cy="252" r="9"/><text class="num-t" x="300" y="256" text-anchor="middle">2</text></g>
-        <g data-node="a3"><circle class="ring" cx="330" cy="252" r="9"/><text class="num-t" x="330" y="256" text-anchor="middle">3</text></g>
-      </svg>
-    </div>
-    <p class="caption" id="flow-caption"></p>
-  </div>
+  <div class="explainer" data-diagram="flow" data-expand></div>
 </section>
 <!-- END: flow -->
 
-<!-- COMPONENT: multiples · Three small diagrams, one idea each. -->
+<!-- COMPONENT: multiples · Two to four small diagrams, one idea each. Spec: kind "multiples" with split, parts, or attempts inside. -->
 <section class="chapter" aria-labelledby="multiples-title">
   <div class="chapter-heading">
     <div><p class="eyebrow">Failures</p><h2 id="multiples-title">A held document keeps its evidence and never stops the queue</h2><p class="lede">The worker holds the failed document and moves on. It never saves the pages that pass.</p></div>
   </div>
-  <div class="multiples">
-    <figure data-expand>
-      <h3>The queue keeps moving</h3>
-      <svg class="dx" viewBox="0 0 340 210" role="img" aria-label="Five documents. Document 3 is held. The other four save.">
-        <text class="lbl" x="78" y="16" text-anchor="middle">QUEUE</text><line class="line" x1="96" y1="44" x2="96" y2="188"/>
-        <text x="80" y="49" text-anchor="end">doc 1</text><circle class="ring" cx="96" cy="44" r="8"/>
-        <text x="80" y="85" text-anchor="end">doc 2</text><circle class="ring" cx="96" cy="80" r="8"/>
-        <text x="80" y="121" text-anchor="end">doc 3</text><circle class="ring" cx="96" cy="116" r="8"/>
-        <text x="80" y="157" text-anchor="end">doc 4</text><circle class="ring" cx="96" cy="152" r="8"/>
-        <text x="80" y="193" text-anchor="end">doc 5</text><circle class="ring" cx="96" cy="188" r="8"/>
-        <line class="line" x1="124" y1="116" x2="158" y2="116"/><path class="tip" d="M164 116l-7-4v8z"/>
-        <text class="lbl" x="200" y="16" text-anchor="middle">AFTER</text><line class="line" x1="190" y1="44" x2="190" y2="188"/>
-        <circle class="okc" cx="190" cy="44" r="8"/><text x="206" y="49">doc 1 saved</text>
-        <circle class="okc" cx="190" cy="80" r="8"/><text x="206" y="85">doc 2 saved</text>
-        <path class="line dash" d="M190 116H232"/><circle class="heldc" cx="244" cy="116" r="8"/><text class="held-t" x="260" y="121">held</text>
-        <circle class="okc" cx="190" cy="152" r="8"/><text x="206" y="157">doc 4 saved</text>
-        <circle class="okc" cx="190" cy="188" r="8"/><text x="206" y="193">doc 5 saved</text>
-      </svg>
-      <p class="caption">doc 3 waits with its evidence<br>↳ docs 1, 2, 4, and 5 save</p>
-    </figure>
-    <figure data-expand>
-      <h3>Nothing saves in part</h3>
-      <svg class="dx" viewBox="0 0 340 210" role="img" aria-label="A document with three pages. Page 3 fails. Pages 1 and 2 never save alone. The whole document is held.">
-        <text class="lbl" x="8" y="16">ONE DOCUMENT</text><rect class="group" x="4" y="30" width="130" height="170" rx="8"/>
-        <rect class="ring" x="18" y="44" width="102" height="38" rx="3"/><text x="30" y="68">page 1</text><text class="ok-t" x="106" y="68" text-anchor="middle">✓</text>
-        <rect class="ring" x="18" y="94" width="102" height="38" rx="3"/><text x="30" y="118">page 2</text><text class="ok-t" x="106" y="118" text-anchor="middle">✓</text>
-        <g class="is-bad"><rect class="ring" x="18" y="144" width="102" height="38" rx="3"/><text class="bad-t" x="30" y="168">page 3</text><text class="bad-t" x="106" y="168" text-anchor="middle">✕</text></g>
-        <g class="is-bad"><line class="line dash" x1="140" y1="115" x2="196" y2="68"/></g>
-        <circle class="badc" cx="208" cy="64" r="8"/><line x1="202" y1="58" x2="214" y2="70" style="stroke:var(--color-warn);stroke-width:1.5"/>
-        <text class="bad-t" x="224" y="60">pages 1–2 alone</text><text class="bad-t" x="224" y="78">never save</text>
-        <line class="line" x1="140" y1="140" x2="190" y2="140"/><path class="tip" d="M196 140l-7-4v8z"/>
-        <circle class="heldc" cx="208" cy="140" r="8"/><text class="held-t" x="224" y="136">whole document</text><text class="held-t" x="224" y="154">held</text>
-      </svg>
-      <p class="caption">one failed page holds the document<br>↳ no partial save</p>
-    </figure>
-    <figure data-expand>
-      <h3>Retries never turn into a pass</h3>
-      <svg class="dx" viewBox="0 0 340 210" role="img" aria-label="Three attempts fail. The document is held. Retries do not save it.">
-        <text class="lbl" x="8" y="16">ATTEMPTS</text>
-        <line class="line" x1="30" y1="70" x2="150" y2="70"/>
-        <g class="is-bad"><circle class="ring" cx="30" cy="70" r="12"/><text class="num-t" x="30" y="74" text-anchor="middle">1</text><circle class="ring" cx="90" cy="70" r="12"/><text class="num-t" x="90" y="74" text-anchor="middle">2</text><circle class="ring" cx="150" cy="70" r="12"/><text class="num-t" x="150" y="74" text-anchor="middle">3</text></g>
-        <text class="bad-t" x="90" y="108" text-anchor="middle">each one fails</text>
-        <line class="line" x1="172" y1="70" x2="226" y2="70"/><path class="tip" d="M232 70l-7-4v8z"/>
-        <circle class="heldc" cx="250" cy="70" r="12"/><text class="held-t" x="250" y="108" text-anchor="middle">held</text>
-        <path class="line dash" d="M250 120V160H286"/><circle class="ring" cx="300" cy="160" r="9"/><line x1="293" y1="153" x2="307" y2="167" style="stroke:var(--color-warn);stroke-width:1.5"/>
-        <text class="mut" x="240" y="196" text-anchor="middle">three tries do not save it</text>
-      </svg>
-      <p class="caption">three failures end in a hold<br>↳ the attempt count is not approval</p>
-    </figure>
-  </div>
+  <div data-diagram="failures"></div>
 </section>
 <!-- END: multiples -->
 
@@ -681,29 +527,23 @@ details p{font-size:var(--text-small);line-height:1.65;color:var(--color-muted);
 </section>
 <!-- END: spotlight -->
 
-<!-- COMPONENT: method · A bracket diagram of what the results cover, then the limits. -->
+<!-- COMPONENT: lanes · Two lanes with a gate between them: who approves, then who builds. Spec: kind "lanes". -->
+<section class="chapter" aria-labelledby="lanes-title">
+  <div class="chapter-heading">
+    <div><p class="eyebrow">Next steps</p><h2 id="lanes-title">People approve the rules before agents build them</h2><p class="lede">The rule files exist today. The agent work waits for approval.</p></div>
+    <span class="tag">Waiting at approval</span>
+  </div>
+  <div class="explainer bare" data-diagram="lanes" data-expand></div>
+</section>
+<!-- END: lanes -->
+
+<!-- COMPONENT: method · A bracket diagram of what the results cover, then the limits and the sources. Spec: kind "brackets". -->
 <section class="chapter" id="method" aria-labelledby="method-title">
   <div class="chapter-heading">
     <div><p class="eyebrow">Method</p><h2 id="method-title">How we measured these results</h2></div>
     <span class="tag">One run · no retries</span>
   </div>
-  <!-- Bracket diagram: a process with brackets that say what each part covers. Static. -->
-  <div class="explainer bare" data-expand>
-    <div class="dx-wide">
-      <svg class="dx" viewBox="0 0 1144 200" role="img" aria-label="Documents go to one parse step, then to both readers, then to scoring. The results measure the readers and the scoring. They do not measure the parse step.">
-        <g><text class="lbl" x="80" y="20" text-anchor="middle">24 DOCUMENTS</text><rect class="page" x="56" y="40" width="48" height="60" rx="3"/><line class="tick" x1="64" y1="56" x2="96" y2="56"/><line class="tick" x1="64" y1="64" x2="88" y2="64"/><line class="tick" x1="64" y1="72" x2="96" y2="72"/></g>
-        <line class="line" x1="120" y1="70" x2="214" y2="70"/><path class="tip" d="M220 70l-7-4v8z"/>
-        <g><text class="lbl" x="260" y="20" text-anchor="middle">PARSE ONCE</text><circle class="ring" cx="260" cy="70" r="12"/></g>
-        <line class="line" x1="284" y1="70" x2="434" y2="70"/><path class="tip" d="M440 70l-7-4v8z"/>
-        <g><text class="lbl" x="490" y="20" text-anchor="middle">BOTH READERS</text><circle class="dot" cx="476" cy="70" r="10"/><circle class="ring" cx="504" cy="70" r="10" style="fill:var(--color-secondary);stroke:var(--color-secondary)"/></g>
-        <line class="line" x1="526" y1="70" x2="674" y2="70"/><path class="tip" d="M680 70l-7-4v8z"/>
-        <g><text class="lbl" x="700" y="20" text-anchor="middle">SCORE</text><path class="gate" d="M700 52L718 70L700 88L682 70Z"/><text x="740" y="64">fixed answer key</text><text class="mut" x="740" y="84">one person labeled it</text></g>
-        <g><path class="bracket-b" d="M200 116v10h120v-10"/><text class="held-t" x="260" y="154" text-anchor="middle">Not measured</text><text class="mut" x="260" y="174" text-anchor="middle">parse time is outside the results</text></g>
-        <g><path class="bracket-a" d="M440 116v10h290v-10"/><text class="on-t" x="585" y="154" text-anchor="middle">Measured</text><text class="mut" x="585" y="174" text-anchor="middle">time and correctness for each reader</text></g>
-      </svg>
-    </div>
-  </div>
-  </div>
+  <div class="explainer bare" data-diagram="coverage" data-expand></div>
   <div class="method-grid">
     <div><h3>What we measured</h3><p>We ran each task one time, with no retries. The times do not include the parse step.</p></div>
     <div><h3>What these results do not show</h3><p>The sample is small. One person labeled the answers. We did not test scanned pages.</p></div>
@@ -714,12 +554,12 @@ details p{font-size:var(--text-small);line-height:1.65;color:var(--color-muted);
 
 </main>
 
-<footer class="footer"><p>PROJECT · DATE<br>Built from recorded results.</p><p>Source link ↗<br>Run RUN_ID · no live calls</p></footer>
+<footer class="footer"><p>PROJECT · DATE<br>Built from recorded results.</p><p>Source link ↗<br>Run RUN_ID</p></footer>
 
 <dialog class="zoom-dialog" id="zoom-dialog"><header><span id="zoom-title"></span><button type="button" class="button-quiet" id="zoom-close">Close ×</button></header><img id="zoom-img" alt=""><div class="zoom-body" id="zoom-body" hidden></div></dialog>
 
-<!-- DATA: scripts/new_report.py fills this block from the component data. -->
-<script id="report-data" type="application/json">{"compare": {"columns": ["Field", "Reader v2", "Reader v1"], "rows": [{"field": "Model number", "a": "WDS-410", "b": "WDS-410"}, {"field": "Voltage", "a": "100–240 VAC", "b": "100–240 VAC"}, {"field": "Max pressure", "a": "150 psi (10 bar)", "b": "150 psi"}, {"field": "Operating temperature", "a": "0–50 °C", "b": "0–50 °C"}, {"field": "Enclosure rating", "a": "NEMA 4X", "b": "NEMA 4"}, {"field": "Relay outputs", "a": "4", "b": "4"}, {"field": "Warranty", "a": "2 years", "b": "Not found"}, {"field": "Weight", "a": "3.2 kg", "b": "3.2 kg"}]}, "catalog": {"selected": "R4", "groups": [{"id": "source", "label": "Source"}, {"id": "tables", "label": "Tables"}, {"id": "publish", "label": "Saving"}], "items": [{"id": "R1", "group": "source", "name": "Names its source page", "accepts": "A correction that names the exact page and PDF version.", "rejects": "A correction that names a different version of the PDF."}, {"id": "R2", "group": "source", "name": "A second call reviews it", "accepts": "A review with its own response ID.", "rejects": "A review that has the same response ID as the correction."}, {"id": "R3", "group": "tables", "name": "Each printed cell keeps a record", "accepts": "Merged cells keep the values that the page shows.", "rejects": "A table that drops an empty cell from the count."}, {"id": "R4", "group": "tables", "name": "A heading stays in its scope", "accepts": "A local heading covers only its own rows and columns.", "rejects": "A local heading that reaches later rows."}, {"id": "R5", "group": "publish", "name": "Save whole documents only", "accepts": "A document where every page passes review.", "rejects": "A document with one page that failed review."}, {"id": "R6", "group": "publish", "name": "One failure, others continue", "accepts": "The queue moves on after a held document.", "rejects": "A batch that stops at the first failure."}]}, "flow": {"start": "retry", "cases": [{"id": "first", "label": "Passes on attempt 1", "path": ["source", "e1", "parse", "e2", "read", "e3", "review", "e4", "gate", "a1", "e5", "save"], "marks": {"read": "on", "review": "on", "a1": "on", "e5": "ok", "save": "ok"}, "caption": "attempt 1 passes the gate · the whole document saves\nthe review is a separate call with its own response ID"}, {"id": "retry", "label": "Passes on attempt 2", "path": ["source", "e1", "parse", "e2", "read", "e3", "review", "e4", "gate", "a1", "loop", "a2", "e5", "save"], "marks": {"read": "on", "review": "on", "a1": "bad", "loop": "bad", "a2": "on", "e5": "ok", "save": "ok"}, "caption": "attempt 1 fails the gate · attempt 2 passes · the whole document saves\nthe failed attempt sends exact feedback to the next one"}, {"id": "held", "label": "Held after 3", "path": ["source", "e1", "parse", "e2", "read", "e3", "review", "e4", "gate", "a1", "loop", "a2", "a3", "e6", "held"], "marks": {"read": "on", "review": "on", "a1": "bad", "a2": "bad", "a3": "bad", "loop": "bad", "held": "held"}, "caption": "three attempts fail the gate · the document is held\nthe evidence stays · the queue moves on"}]}, "engines": {"a": "Reader v2", "b": "Reader v1"}, "race": {"classify": {"label": "Classify", "unit": "ms", "count": "24 documents", "a": {"p50": 142.3, "p95": 190.1}, "b": {"p50": 811.0, "p95": 1204.6}}, "split": {"label": "Split", "unit": "ms", "count": "6 packets", "a": {"p50": 214.9, "p95": 290.0}, "b": {"p50": 1352.4, "p95": 1720.2}}}, "breakdown": {"tag": "60 of 60 tasks", "total": "4.1", "unit": "¢", "detail": "Estimated API cost for both readers, with warmups.", "rows": [{"label": "Reader v2", "note": "30 tasks", "value": 0.0081, "display": "$0.0081", "color": "var(--color-accent)"}, {"label": "Reader v1", "note": "30 tasks", "value": 0.0302, "display": "$0.0302", "color": "var(--color-secondary)"}, {"label": "Warmups", "note": "4 calls", "value": 0.0027, "display": "$0.0027", "color": "var(--color-line-strong)"}]}, "groups": [{"id": "manual", "label": "Manuals", "color": "var(--color-cat-1)"}, {"id": "datasheet", "label": "Datasheets", "color": "var(--color-cat-2)"}, {"id": "notice", "label": "Notices", "color": "var(--color-cat-3)"}, {"id": "form", "label": "Forms", "color": "var(--color-cat-4)"}], "items": [{"id": "d01", "title": "WDS controller manual", "group": "manual", "pages": 12, "href": "#", "a": {"ok": true, "value": "manual", "ms": 140.2, "flag": false}, "b": {"ok": true, "value": "manual", "ms": 790.4, "flag": false}}, {"id": "d02", "title": "Electrode datasheet", "group": "datasheet", "pages": 2, "href": "#", "a": {"ok": true, "value": "datasheet", "ms": 131.0, "flag": false}, "b": {"ok": false, "value": "manual", "ms": 802.7, "flag": true}}, {"id": "d03", "title": "Recall notice", "group": "notice", "pages": 1, "href": "#", "a": {"ok": false, "value": "form", "ms": 150.3, "flag": true}, "b": {"ok": true, "value": "notice", "ms": 760.0, "flag": false}}, {"id": "d04", "title": "Warranty claim form", "group": "form", "pages": 3, "href": "#", "a": {"ok": true, "value": "form", "ms": 128.8, "flag": false}, "b": {"ok": true, "value": "form", "ms": 835.1, "flag": false}}], "packets": [{"id": "p01", "units": 10, "summary": "Three documents in one file", "status": "Reader v2 adds one boundary", "flagged": true, "caption": "The red outline shows the extra boundary before page 6. Pages 4 to 8 are one document.", "rows": [{"label": "Correct ranges", "note": "3 documents", "segments": [{"from": 1, "to": 3, "group": "manual"}, {"from": 4, "to": 8, "group": "datasheet"}, {"from": 9, "to": 10, "group": "form"}]}, {"label": "Reader v2", "note": "One extra boundary", "segments": [{"from": 1, "to": 3, "group": "manual"}, {"from": 4, "to": 5, "group": "datasheet"}, {"from": 6, "to": 8, "group": "datasheet", "flag": true}, {"from": 9, "to": 10, "group": "form"}]}, {"label": "Reader v1", "note": "Exact match", "segments": [{"from": 1, "to": 3, "group": "manual"}, {"from": 4, "to": 8, "group": "datasheet"}, {"from": 9, "to": 10, "group": "form"}]}]}, {"id": "p02", "units": 6, "summary": "Two documents in one file", "status": "Both exact", "flagged": false, "caption": "Both readers find every page range in this packet.", "rows": [{"label": "Correct ranges", "note": "2 documents", "segments": [{"from": 1, "to": 2, "group": "notice"}, {"from": 3, "to": 6, "group": "manual"}]}, {"label": "Reader v2", "note": "Exact match", "segments": [{"from": 1, "to": 2, "group": "notice"}, {"from": 3, "to": 6, "group": "manual"}]}, {"label": "Reader v1", "note": "Exact match", "segments": [{"from": 1, "to": 2, "group": "notice"}, {"from": 3, "to": 6, "group": "manual"}]}]}]}</script>
+<!-- DATA: report.data.json holds the data. build_report.py puts it here. -->
+<script id="report-data" type="application/json">{"diagrams": {"routes": {"kind": "route", "tabs": ["Reader v1", "Reader v2"], "titles": ["Reader v1 reads every page with one prompt", "Reader v2 picks a reader for each page type"], "group": "Pages", "inputs": ["Manual page", "Datasheet", "Notice", "Form"], "before": {"node": "One prompt", "sub": "Every page", "bad": [1], "notes": ["Datasheet read", "as a manual"]}, "after": {"head": "Reader", "lanes": ["manual", "datasheet", "read as form", "form"], "bad": [2], "gate": "Check", "end": "Save"}, "caption": {"a": ["one prompt for every page type", "red: the page that Reader v1 gets wrong"], "b": ["four readers · one check", "red: the page that Reader v2 still gets wrong"]}, "aria": ["Four page types go into one prompt. The datasheet comes out as a manual.", "Each page type goes to its own reader, then to one check. The notice comes out as a form."]}, "scope": {"kind": "scope", "tabs": ["Reader v1", "Reader v2"], "title": "Pump specifications", "groups": ["Model", "Model", "Model"], "values": [["EW-15", "EW-25", "EW-35"], ["0.5 L/min", "1.2 L/min", "2.0 L/min"]], "last": "Notes", "focus": 1, "notes": {"a": ["Model reaches", "the notes row"], "b": ["Each scope ends", "above the notes"], "last": ["Keeps the", "table title"]}, "caption": {"a": ["top headings applied to every row", "the notes row gets a label that it never had"], "b": ["three cells · same word · three scopes", "each heading covers only its own column"]}, "aria": ["Reader v1: the Model headings spread into the notes row.", "Reader v2: each Model heading covers only its own rows."]}, "flow": {"kind": "flow", "aria": "A source goes through parse, reader, review, and a gate. A failed gate loops back. Three failures hold the document.", "steps": [{"id": "source", "label": "Source", "sub": "kept as-is", "shape": "page"}, {"id": "parse", "label": "Parse", "sub": "same text for both"}, {"id": "read", "label": "Reader answers", "state": "on"}, {"id": "review", "label": "Review", "sub": "separate call", "shape": "review", "state": "on"}, {"id": "gate", "label": "Gate", "shape": "gate"}, {"id": "save", "label": "Save", "sub": "whole document"}], "loop": {"to": "read", "note": "fails · exact feedback goes to a new attempt"}, "held": "held · evidence kept", "attempts": 3, "start": 1, "cases": [{"tab": "Passes on attempt 1", "fails": 0, "reach": "end", "caption": ["attempt 1 passes the gate · the whole document saves"]}, {"tab": "Passes on attempt 2", "fails": 1, "reach": "end", "caption": ["attempt 1 fails the gate · attempt 2 passes", "the failed attempt sends exact feedback to the next one"]}, {"tab": "Held after 3", "fails": 3, "reach": "held", "caption": ["three attempts fail the gate · the document is held", "the evidence stays · the queue moves on"]}]}, "failures": {"kind": "multiples", "items": [{"title": "The queue keeps moving", "diagram": {"kind": "split", "left": "Queue", "right": "After", "items": ["doc 1", "doc 2", "doc 3", "doc 4", "doc 5"], "held": [2], "ok": "saved", "hold": "held", "aria": "Five documents. Document 3 is held. The other four save."}, "caption": ["doc 3 waits with its evidence", "docs 1, 2, 4, and 5 save"]}, {"title": "Nothing saves in part", "diagram": {"kind": "parts", "group": "One document", "parts": ["page 1", "page 2", "page 3"], "bad": [2], "reject": ["pages 1–2 alone", "never save"], "result": ["whole document", "held"], "aria": "Page 3 fails, so the whole document is held."}, "caption": ["one failed page holds the document", "no partial save"]}, {"title": "Retries never turn into a pass", "diagram": {"kind": "attempts", "label": "Attempts", "count": 3, "fail": "each one fails", "result": "held", "note": "three tries do not save it", "aria": "Three attempts fail. The document is held."}, "caption": ["three failures end in a hold", "the attempt count is not approval"]}]}, "lanes": {"kind": "lanes", "aria": "People own four rule files and approve them. Then agents build the interface, model, proofs, and tests, and run make verify.", "lanes": [{"label": "People", "items": ["SPEC.md", "RULES.md", "EXAMPLES.md"]}, {"label": "Agents", "items": ["Interface", "Model", "Proofs", "Tests"]}], "gate": "approve", "end": "make verify", "caption": ["solid: files that exist today · dashed: work that waits for approval"]}, "coverage": {"kind": "brackets", "aria": "Documents go to one parse step, then both readers, then scoring. The results cover the readers and the scoring, not the parse step.", "steps": [{"label": "24 documents", "shape": "page"}, {"label": "Parse once"}, {"label": "Both readers", "shape": "pair"}, {"label": "Score", "shape": "gate", "note": ["fixed answer key", "one person labeled it"]}], "brackets": [{"from": 1, "to": 1, "label": "Not measured", "note": "parse time is outside the results", "tone": "held"}, {"from": 2, "to": 3, "label": "Measured", "note": "time and correctness for each reader", "tone": "on"}]}}, "compare": {"columns": ["Field", "Reader v2", "Reader v1"], "rows": [{"field": "Model number", "a": "WDS-410", "b": "WDS-410"}, {"field": "Voltage", "a": "100–240 VAC", "b": "100–240 VAC"}, {"field": "Max pressure", "a": "150 psi (10 bar)", "b": "150 psi"}, {"field": "Operating temperature", "a": "0–50 °C", "b": "0–50 °C"}, {"field": "Enclosure rating", "a": "NEMA 4X", "b": "NEMA 4"}, {"field": "Relay outputs", "a": "4", "b": "4"}, {"field": "Warranty", "a": "2 years", "b": "Not found"}, {"field": "Weight", "a": "3.2 kg", "b": "3.2 kg"}]}, "catalog": {"selected": "R4", "groups": [{"id": "source", "label": "Source"}, {"id": "tables", "label": "Tables"}, {"id": "publish", "label": "Saving"}], "items": [{"id": "R1", "group": "source", "name": "Names its source page", "accepts": "A correction that names the exact page and PDF version.", "rejects": "A correction that names a different version of the PDF."}, {"id": "R2", "group": "source", "name": "A second call reviews it", "accepts": "A review with its own response ID.", "rejects": "A review that has the same response ID as the correction."}, {"id": "R3", "group": "tables", "name": "Each printed cell keeps a record", "accepts": "Merged cells keep the values that the page shows.", "rejects": "A table that drops an empty cell from the count."}, {"id": "R4", "group": "tables", "name": "A heading stays in its scope", "accepts": "A local heading covers only its own rows and columns.", "rejects": "A local heading that reaches later rows."}, {"id": "R5", "group": "publish", "name": "Save whole documents only", "accepts": "A document where every page passes review.", "rejects": "A document with one page that failed review."}, {"id": "R6", "group": "publish", "name": "One failure, others continue", "accepts": "The queue moves on after a held document.", "rejects": "A batch that stops at the first failure."}]}, "engines": {"a": "Reader v2", "b": "Reader v1"}, "race": {"classify": {"label": "Classify", "unit": "ms", "count": "24 documents", "a": {"p50": 142.3, "p95": 190.1}, "b": {"p50": 811.0, "p95": 1204.6}}, "split": {"label": "Split", "unit": "ms", "count": "6 packets", "a": {"p50": 214.9, "p95": 290.0}, "b": {"p50": 1352.4, "p95": 1720.2}}}, "breakdown": {"tag": "60 of 60 tasks", "total": "4.1", "unit": "¢", "detail": "Estimated API cost for both readers, with warmups.", "rows": [{"label": "Reader v2", "note": "30 tasks", "value": 0.0081, "display": "$0.0081", "color": "var(--color-accent)"}, {"label": "Reader v1", "note": "30 tasks", "value": 0.0302, "display": "$0.0302", "color": "var(--color-secondary)"}, {"label": "Warmups", "note": "4 calls", "value": 0.0027, "display": "$0.0027", "color": "var(--color-line-strong)"}]}, "groups": [{"id": "manual", "label": "Manuals", "color": "var(--color-cat-1)"}, {"id": "datasheet", "label": "Datasheets", "color": "var(--color-cat-2)"}, {"id": "notice", "label": "Notices", "color": "var(--color-cat-3)"}, {"id": "form", "label": "Forms", "color": "var(--color-cat-4)"}], "items": [{"id": "d01", "title": "WDS controller manual", "group": "manual", "pages": 12, "href": "#", "a": {"ok": true, "value": "manual", "ms": 140.2, "flag": false}, "b": {"ok": true, "value": "manual", "ms": 790.4, "flag": false}}, {"id": "d02", "title": "Electrode datasheet", "group": "datasheet", "pages": 2, "href": "#", "a": {"ok": true, "value": "datasheet", "ms": 131.0, "flag": false}, "b": {"ok": false, "value": "manual", "ms": 802.7, "flag": true}}, {"id": "d03", "title": "Recall notice", "group": "notice", "pages": 1, "href": "#", "a": {"ok": false, "value": "form", "ms": 150.3, "flag": true}, "b": {"ok": true, "value": "notice", "ms": 760.0, "flag": false}}, {"id": "d04", "title": "Warranty claim form", "group": "form", "pages": 3, "href": "#", "a": {"ok": true, "value": "form", "ms": 128.8, "flag": false}, "b": {"ok": true, "value": "form", "ms": 835.1, "flag": false}}], "packets": [{"id": "p01", "units": 10, "summary": "Three documents in one file", "status": "Reader v2 adds one boundary", "flagged": true, "caption": "The red outline shows the extra boundary before page 6. Pages 4 to 8 are one document.", "rows": [{"label": "Correct ranges", "note": "3 documents", "segments": [{"from": 1, "to": 3, "group": "manual"}, {"from": 4, "to": 8, "group": "datasheet"}, {"from": 9, "to": 10, "group": "form"}]}, {"label": "Reader v2", "note": "One extra boundary", "segments": [{"from": 1, "to": 3, "group": "manual"}, {"from": 4, "to": 5, "group": "datasheet"}, {"from": 6, "to": 8, "group": "datasheet", "flag": true}, {"from": 9, "to": 10, "group": "form"}]}, {"label": "Reader v1", "note": "Exact match", "segments": [{"from": 1, "to": 3, "group": "manual"}, {"from": 4, "to": 8, "group": "datasheet"}, {"from": 9, "to": 10, "group": "form"}]}]}, {"id": "p02", "units": 6, "summary": "Two documents in one file", "status": "Both exact", "flagged": false, "caption": "Both readers find every page range in this packet.", "rows": [{"label": "Correct ranges", "note": "2 documents", "segments": [{"from": 1, "to": 2, "group": "notice"}, {"from": 3, "to": 6, "group": "manual"}]}, {"label": "Reader v2", "note": "Exact match", "segments": [{"from": 1, "to": 2, "group": "notice"}, {"from": 3, "to": 6, "group": "manual"}]}, {"label": "Reader v1", "note": "Exact match", "segments": [{"from": 1, "to": 2, "group": "notice"}, {"from": 3, "to": 6, "group": "manual"}]}]}]}</script>
 
 <script>
 'use strict';
@@ -765,6 +605,172 @@ if (exists('compare-table')) {
   render();
 }
 
+// Diagrams: <div data-diagram="key"> draws data.diagrams[key]. Each kind has one fixed style:
+// shapes carry the meaning, labels stay short. See COMPONENTS.md for the specs.
+const diagram = (() => {
+  const T = (x, y, s, cls = '', a = 'start') => `<text x="${x}" y="${y}" text-anchor="${a}"${cls ? ` class="${cls}"` : ''}>${esc(s)}</text>`;
+  const L = (x, y, s, a = 'start') => T(x, y, String(s).toUpperCase(), 'lbl', a);
+  const many = (x, y, arr, cls, a = 'start', lh = 18) => [].concat(arr || []).map((s, i) => T(x, y + i * lh, s, cls, a)).join('');
+  const svg = (w, h, body, label) => `<svg class="dx" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(label || '')}">${body}</svg>`;
+  const arrow = (x1, x2, y, attrs = '') => `<g ${attrs}><line class="line" x1="${x1}" y1="${y}" x2="${x2 - 6}" y2="${y}"/><path class="tip" d="M${x2} ${y}l-7-4v8z"/></g>`;
+  const caption = c => c ? `<p class="caption">${[].concat(c).map(esc).join('<br>↳ ')}</p>` : '';
+  const textWidth = s => String(s).length * 8.4;
+  const has = (list, i) => (list || []).includes(i);
+  const diamond = (x, y, r = 14, cls = 'gate') => `<path class="${cls}" d="M${x} ${y - r}L${x + r} ${y}L${x} ${y + r}L${x - r} ${y}Z"/>`;
+  const pageIcon = (x, y) => `<rect class="page" x="${x - 18}" y="${y - 24}" width="36" height="46" rx="3"/><line class="tick" x1="${x - 10}" y1="${y - 10}" x2="${x + 10}" y2="${y - 10}"/><line class="tick" x1="${x - 10}" y1="${y - 2}" x2="${x + 10}" y2="${y - 2}"/><line class="tick" x1="${x - 10}" y1="${y + 6}" x2="${x + 4}" y2="${y + 6}"/>`;
+
+  // Two views of one diagram, with tabs: a, b, and both.
+  const views = (box, s, a, b) => {
+    box.dataset.views = ''; box.dataset.view = 'both';
+    const [ta, tb] = s.tabs || ['Before', 'After'], cap = s.caption || {};
+    return `<div class="explainer-bar"><div class="tabs views-toggle" aria-label="Choose view"><button type="button" data-view="a" aria-pressed="false">${esc(ta)}</button><button type="button" data-view="b" aria-pressed="false">${esc(tb)}</button><button type="button" data-view="both" aria-pressed="true">Side by side</button></div></div>` +
+      `<div class="views"><figure class="view a" style="margin:0">${s.titles ? `<h3>${esc(s.titles[0])}</h3>` : ''}${a}${caption(cap.a)}</figure><figure class="view b" style="margin:0">${s.titles ? `<h3>${esc(s.titles[1])}</h3>` : ''}${b}${caption(cap.b)}</figure></div>`;
+  };
+
+  const kinds = {
+    // Same inputs, two routes. a: everything through one node. b: one lane per input, then a gate.
+    route(s, box) {
+      const n = s.inputs.length, ys = s.inputs.map((_, i) => 66 + i * 45), mid = (ys[0] + ys[n - 1]) / 2, h = 45 * n + 70;
+      const group = `${L(8, 18, s.group || 'Inputs')}<rect class="group" x="4" y="34" width="210" height="${45 * n + 20}" rx="8"/>`;
+      const bf = s.before || {}, af = s.after || {};
+      const a = svg(520, h, group + s.inputs.map((t, i) => `<g class="${has(bf.bad, i) ? 'is-bad' : ''}">${T(20, ys[i] + 5, t)}<rect class="box" x="188" y="${ys[i] - 6}" width="12" height="12" rx="2"/><line class="line" x1="214" y1="${ys[i]}" x2="300" y2="${mid}"/></g>`).join('') +
+        `<rect class="node" x="300" y="${mid - 20}" width="40" height="40" rx="4"/><line class="tick" x1="308" y1="${mid - 7}" x2="332" y2="${mid - 7}"/><line class="tick" x1="308" y1="${mid}" x2="332" y2="${mid}"/><line class="tick" x1="308" y1="${mid + 7}" x2="332" y2="${mid + 7}"/>` +
+        L(320, mid - 33, bf.node || '', 'middle') + L(320, mid + 43, bf.sub || '', 'middle') + arrow(348, 390, mid) +
+        many(400, mid - ((bf.notes || []).length - 1) * 9 + 5, bf.notes, 'bad-t'), s.aria?.[0]);
+      const b = svg(520, h, group + (af.head ? L(266, 18, af.head) : '') + s.inputs.map((t, i) => {
+        const bad = has(af.bad, i), lane = (af.lanes || [])[i] || '';
+        return `<g class="${bad ? 'is-bad' : 'is-on'}">${T(20, ys[i] + 5, t)}<rect class="box" x="188" y="${ys[i] - 6}" width="12" height="12" rx="2"/><line class="line" x1="214" y1="${ys[i]}" x2="238" y2="${ys[i]}"/><circle class="dot" cx="250" cy="${ys[i]}" r="8"/><circle class="pip" cx="250" cy="${ys[i]}" r="2.4"/>${T(266, ys[i] + 5, lane, bad ? 'bad-t' : 'on-t')}<line class="line" x1="${Math.min(274 + textWidth(lane), 400)}" y1="${ys[i]}" x2="422" y2="${mid}"/></g>`;
+      }).join('') + diamond(436, mid) + L(436, mid + 41, af.gate || '', 'middle') + arrow(454, 488, mid) + `<circle class="okc" cx="502" cy="${mid}" r="8"/>` + L(514, mid - 25, af.end || '', 'end'), s.aria?.[1]);
+      return views(box, s, a, b);
+    },
+
+    // One grid drawn twice. a: the focused heading leaks into the last row. b: each scope stops above it.
+    scope(s, box) {
+      const g = s.groups.length, gw = 372 / g, rows = s.values || [[], []], Y1 = 72, last = Y1 + 38 * (1 + rows.length), h = last + 38 + 16, f = s.focus ?? Math.floor(g / 2);
+      const grid = leak => s.groups.map((_, i) => `<rect class="scope${i === f ? ' focus' : ''}" x="${4 + i * gw + 3}" y="${Y1 + 3}" width="${gw - 6}" height="${(leak ? last + 38 : last) - Y1 - 6}" rx="3"/>`).join('') +
+        (leak ? `<rect class="spill" x="7" y="${last + 3}" width="366" height="32" rx="3"/>` : '') +
+        `<rect class="box" x="4" y="34" width="372" height="${last + 38 - 34}"/>` + [Y1, ...rows.map((_, r) => Y1 + 38 * (r + 1)), last].map(y => `<line class="line" x1="4" y1="${y}" x2="376" y2="${y}"/>`).join('') +
+        s.groups.slice(1).map((_, i) => `<line class="line" x1="${4 + (i + 1) * gw}" y1="${Y1}" x2="${4 + (i + 1) * gw}" y2="${last}"/>`).join('') +
+        T(190, 58, s.title || '', '', 'middle') + s.groups.map((t, i) => T(4 + i * gw + gw / 2, Y1 + 24, t, 'on-t', 'middle')).join('') +
+        rows.map((row, r) => row.map((v, i) => T(4 + i * gw + gw / 2, Y1 + 38 * (r + 1) + 24, v, 'mono mut', 'middle')).join('')).join('') +
+        T(190, last + 24, leak ? `${s.last || 'Last row'} · labeled ${s.groups[f]}` : (s.last || 'Last row'), leak ? 'bad-t' : '', 'middle');
+      const notes = s.notes || {};
+      const a = svg(520, h, L(8, 18, (s.tabs || ['Before'])[0]) + grid(true) + `<line class="line" x1="384" y1="${last + 19}" x2="398" y2="${last + 19}" style="stroke:var(--color-warn)"/>` + many(404, last + 14, notes.a, 'bad-t', 'start', 17), s.aria?.[0]);
+      const b = svg(520, h, L(8, 18, (s.tabs || ['', 'After'])[1]) + grid(false) + `<path class="bracket-a" d="M386 ${Y1 + 7}h8v${last - Y1 - 14}h-8"/>` + many(402, (Y1 + last) / 2 - 4, notes.b, 'on-t', 'start', 17) + many(402, last + 14, notes.last, '', 'start', 17), s.aria?.[1]);
+      return views(box, s, a, b);
+    },
+
+    // A process: steps, a gate, the end. A failed gate loops back; repeated failure ends in a hold. Tabs choose the case.
+    flow(s, box) {
+      const st = s.steps, n = st.length, gi = st.findIndex(x => x.shape === 'gate'), Y = 80;
+      const x0 = Math.max(48, String(st[0].label).length * 4.6 + 8, String(st[0].sub || '').length * 4.4 + 8), xs = st.map((_, i) => Math.round(x0 + i * (880 - x0) / (n - 1)));
+      const rad = x => x.shape === 'page' ? 18 : x.shape === 'gate' ? 18 : x.dots ? (x.dots - 1) * 11 + 7 : 12;
+      const tx = xs[st.findIndex(x => x.id === (s.loop || {}).to)] ?? xs[Math.max(gi - 2, 0)], gx = xs[gi];
+      let body = st.map((x, i) => {
+        let shape;
+        if (x.shape === 'page') shape = pageIcon(xs[i], Y);
+        else if (x.shape === 'gate') shape = diamond(xs[i], Y, 18);
+        else if (x.dots) shape = Array.from({length: x.dots}, (_, k) => `<circle class="ring" cx="${xs[i] - (x.dots - 1) * 11 + k * 22}" cy="${Y}" r="7"/>`).join('');
+        else shape = `<circle class="ring" cx="${xs[i]}" cy="${Y}" r="12"/>${x.shape === 'review' ? `<circle class="dot" cx="${xs[i]}" cy="${Y}" r="3.5"/>` : ''}`;
+        return `<g data-node="${esc(x.id)}">${L(xs[i], 32, x.label, 'middle')}${shape}${x.sub ? T(xs[i], 132, x.sub, 'mut halo', 'middle') : ''}</g>`;
+      }).join('');
+      body += st.slice(1).map((x, i) => arrow(xs[i] + rad(st[i]) + 12, xs[i + 1] - rad(x) - 12, Y, `data-node="e${i}"`)).join('');
+      body = `<g data-node="loop"><path class="line dash" d="M${gx} ${Y + 20}V196H${tx}V${Y + 20}"/><path class="tip" d="M${tx} ${Y + 14}l-4 8h8z"/>${T((gx + tx) / 2, 224, (s.loop || {}).note || '', 'mut', 'middle')}</g>` + body;
+      body += `<g data-node="branch"><path class="line dash" d="M${gx + 10} ${Y + 12}L${gx + 70} 170H${gx + 106}"/></g><g data-node="held"><circle class="ring" cx="${gx + 120}" cy="170" r="10"/>${T(gx + 140, 175, s.held || 'held', 'mut')}</g>`;
+      const att = s.attempts || 0;
+      body += att ? L(tx - 140, 256, 'Attempt', 'end') + Array.from({length: att}, (_, k) => `<g data-node="a${k + 1}"><circle class="ring" cx="${tx - 110 + k * 30}" cy="252" r="9"/><text class="num-t" x="${tx - 110 + k * 30}" y="256" text-anchor="middle">${k + 1}</text></g>`).join('') : '';
+      const html = `<div class="explainer-bar"><div class="tabs flow-cases" aria-label="Choose a case">${(s.cases || []).map((c, i) => `<button type="button" data-case="${i}" aria-pressed="false">${esc(c.tab)}</button>`).join('')}</div></div><div class="dx-wide">${svg(1088, 270, body, s.aria).replace('class="dx"', 'class="dx stepper"')}</div><p class="caption flow-caption"></p>`;
+      const init = () => {
+        const root = box.querySelector('.stepper'), part = k => root.querySelector(`[data-node="${k}"]`);
+        const show = i => {
+          const c = s.cases[i], fails = c.fails || 0;
+          root.querySelectorAll('[data-node]').forEach(p => p.classList.remove('reached', 'is-on', 'is-bad', 'is-ok', 'is-held'));
+          st.forEach((x, k) => { if (k <= gi) part(x.id).classList.add('reached'); if (x.state) part(x.id).classList.add('is-' + x.state); if (k < gi) part('e' + k)?.classList.add('reached'); });
+          for (let k = 1; k <= Math.min(fails, att); k++) part('a' + k)?.classList.add('reached', 'is-bad');
+          if (fails) part('loop').classList.add('reached', 'is-bad');
+          if (c.reach === 'held') { part('branch').classList.add('reached'); part('held').classList.add('reached', 'is-held'); }
+          else { part('a' + (fails + 1))?.classList.add('reached', 'is-on'); part('e' + gi)?.classList.add('reached', 'is-ok'); const end = part(st[n - 1].id); end.classList.add('reached', 'is-ok'); }
+          box.querySelector('.flow-caption').innerHTML = [].concat(c.caption || []).map(esc).join('<br>↳ ');
+          box.querySelectorAll('.flow-cases button').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.case === i)));
+        };
+        box.querySelectorAll('.flow-cases button').forEach(b => b.addEventListener('click', () => show(+b.dataset.case)));
+        show(s.start ?? 0);
+      };
+      return {html, init};
+    },
+
+    // Small multiples: two to four small diagrams side by side.
+    multiples(s) {
+      return `<div class="multiples">${s.items.map(it => `<figure data-expand><h3>${esc(it.title)}</h3>${kinds[it.diagram.kind](it.diagram)}${caption(it.caption)}</figure>`).join('')}</div>`;
+    },
+
+    // A list where some items are held and the rest pass.
+    split(s) {
+      const ys = s.items.map((_, i) => 44 + i * 36), h = ys[ys.length - 1] + 22, mid = ys[Math.floor(ys.length / 2)];
+      return svg(340, h, L(78, 16, s.left || 'Before', 'middle') + `<line class="line" x1="96" y1="44" x2="96" y2="${ys[ys.length - 1]}"/>` +
+        s.items.map((t, i) => T(80, ys[i] + 5, t, '', 'end') + `<circle class="ring" cx="96" cy="${ys[i]}" r="8"/>`).join('') + arrow(124, 164, mid) +
+        L(200, 16, s.right || 'After', 'middle') + `<line class="line" x1="190" y1="44" x2="190" y2="${ys[ys.length - 1]}"/>` +
+        s.items.map((t, i) => has(s.held, i) ? `<path class="line dash" d="M190 ${ys[i]}H232"/><circle class="heldc" cx="244" cy="${ys[i]}" r="8"/>${T(260, ys[i] + 5, s.hold || 'held', 'held-t')}` : `<circle class="okc" cx="190" cy="${ys[i]}" r="8"/>${T(206, ys[i] + 5, `${t} ${s.ok || ''}`.trim())}`).join(''), s.aria);
+    },
+
+    // One whole made of parts. One bad part holds the whole; the good parts never go alone.
+    parts(s) {
+      const n = s.parts.length, mid = 30 + (50 * n + 20) / 2, h = 50 * n + 60;
+      return svg(340, h, L(8, 16, s.group || 'One item') + `<rect class="group" x="4" y="30" width="130" height="${50 * n + 20}" rx="8"/>` +
+        s.parts.map((t, i) => { const bad = has(s.bad, i), y = 44 + i * 50; return `<g class="${bad ? 'is-bad' : ''}"><rect class="ring" x="18" y="${y}" width="102" height="38" rx="3"/>${T(30, y + 24, t, bad ? 'bad-t' : '')}${T(106, y + 24, bad ? '✕' : '✓', bad ? 'bad-t' : 'ok-t', 'middle')}</g>`; }).join('') +
+        `<g class="is-bad"><line class="line dash" x1="140" y1="${mid}" x2="196" y2="${mid - 50}"/></g><circle class="badc" cx="208" cy="${mid - 54}" r="8"/><line x1="202" y1="${mid - 60}" x2="214" y2="${mid - 48}" style="stroke:var(--color-warn);stroke-width:1.5"/>` +
+        many(224, mid - 58, s.reject, 'bad-t') + arrow(140, 196, mid + 25) + `<circle class="heldc" cx="208" cy="${mid + 25}" r="8"/>` + many(224, mid + 21, s.result, 'held-t'), s.aria);
+    },
+
+    // Every attempt fails, so the item is held. The count of tries is not approval.
+    attempts(s) {
+      const c = s.count || 3, xs = Array.from({length: c}, (_, k) => 30 + k * 60), last = xs[c - 1];
+      return svg(340, 210, L(8, 16, s.label || 'Attempts') + `<line class="line" x1="30" y1="70" x2="${last}" y2="70"/>` +
+        `<g class="is-bad">${xs.map((x, k) => `<circle class="ring" cx="${x}" cy="70" r="12"/><text class="num-t" x="${x}" y="74" text-anchor="middle">${k + 1}</text>`).join('')}</g>` +
+        T((30 + last) / 2, 108, s.fail || '', 'bad-t', 'middle') + arrow(last + 22, last + 82, 70) + `<circle class="heldc" cx="${last + 100}" cy="70" r="12"/>` + T(last + 100, 108, s.result || 'held', 'held-t', 'middle') +
+        `<path class="line dash" d="M${last + 100} 120V160H${last + 136}"/><circle class="ring" cx="${last + 150}" cy="160" r="9"/><line x1="${last + 143}" y1="153" x2="${last + 157}" y2="167" style="stroke:var(--color-warn);stroke-width:1.5"/>` + T(240, 196, s.note || '', 'mut', 'middle'), s.aria);
+    },
+
+    // A row of steps with brackets under it: what a claim covers, and what it does not.
+    brackets(s) {
+      const n = s.steps.length, xs = s.steps.map((_, i) => Math.round(80 + i * (700 / Math.max(n - 1, 1)))), Y = 70;
+      const shape = (x, k) => k === 'page' ? `<rect class="page" x="${x - 24}" y="40" width="48" height="60" rx="3"/><line class="tick" x1="${x - 16}" y1="56" x2="${x + 16}" y2="56"/><line class="tick" x1="${x - 16}" y1="64" x2="${x + 8}" y2="64"/><line class="tick" x1="${x - 16}" y1="72" x2="${x + 16}" y2="72"/>`
+        : k === 'gate' ? diamond(x, Y, 18) : k === 'pair' ? `<circle class="dot" cx="${x - 14}" cy="${Y}" r="10"/><circle cx="${x + 14}" cy="${Y}" r="10" style="fill:var(--color-secondary)"/>` : k === 'dot' ? `<circle class="dot" cx="${x}" cy="${Y}" r="12"/>` : `<circle class="ring" cx="${x}" cy="${Y}" r="12"/>`;
+      const r = k => k === 'page' ? 24 : k === 'pair' ? 24 : 18;
+      let body = s.steps.map((st, i) => L(xs[i], 20, st.label, 'middle') + shape(xs[i], st.shape)).join('');
+      body += s.steps.slice(1).map((st, i) => arrow(xs[i] + r(s.steps[i].shape) + 12, xs[i + 1] - r(st.shape) - 10, Y)).join('');
+      const tail = s.steps[n - 1];
+      if (tail.note) body += many(xs[n - 1] + 40, Y - 6, tail.note, '');
+      body += (s.brackets || []).map(b => { const x1 = xs[b.from] - 60, x2 = xs[b.to] + 60, held = b.tone === 'held'; return `<path class="${held ? 'bracket-b' : 'bracket-a'}" d="M${x1} 116v10h${x2 - x1}v-10"/>${T((x1 + x2) / 2, 154, b.label, held ? 'held-t' : 'on-t', 'middle')}${T((x1 + x2) / 2, 174, b.note || '', 'mut', 'middle')}`; }).join('');
+      return `<div class="dx-wide">${svg(1144, 200, body, s.aria)}</div>`;
+    },
+
+    // Two lanes with a gate between them, for example people who approve and agents who build.
+    lanes(s) {
+      const [top, bottom] = s.lanes; let x = 110, body = L(0, 55, top.label);
+      top.items.forEach(t => { const w = String(t).length * 8.6 + 28; body += `<rect class="ring" x="${x}" y="34" width="${w}" height="32" rx="3" style="stroke:var(--color-ink)"/>${T(x + w / 2, 55, t, 'mono', 'middle')}`; x += w + 12; });
+      const gx = Math.round(x + 70); let sx = 170;
+      body += arrow(x + 6, gx - 24, 50) + diamond(gx, 50, 22, 'heldc') + T(gx + 34, 55, s.gate || 'approve', 'held-t');
+      body += `<line class="line" x1="0" y1="112" x2="1144" y2="112" style="stroke:var(--color-line)"/>` + L(0, 175, bottom.label) + `<path class="line dash" d="M${gx} 76V136H${sx}V160"/>`;
+      bottom.items.forEach((t, i) => {
+        body += `<circle class="heldc" cx="${sx}" cy="170" r="8" style="stroke:var(--color-line-strong)"/>${T(sx, 204, t, 'mut', 'middle')}`;
+        const next = bottom.items[i + 1]; if (next) { const nx = sx + Math.max(120, (String(t).length + String(next).length) * 4.4 + 40); body += `<line class="line" x1="${sx + 10}" y1="170" x2="${nx - 10}" y2="170"/>`; sx = nx; }
+      });
+      if (s.end) { const w = String(s.end).length * 8 + 30; body += `<line class="line" x1="${sx + 10}" y1="170" x2="${sx + 60}" y2="170"/><rect x="${sx + 60}" y="154" width="${w}" height="32" rx="3" style="fill:none;stroke:var(--color-success);stroke-width:1.5;stroke-dasharray:4 3"/>${T(sx + 60 + w / 2, 175, s.end, 'mono ok-t', 'middle')}`; }
+      return `<div class="dx-wide">${svg(1144, 230, body, s.aria)}</div>`;
+    },
+  };
+
+  return box => {
+    const s = (data.diagrams || {})[box.dataset.diagram];
+    if (!s || !kinds[s.kind]) { console.warn(`diagram "${box.dataset.diagram}" has no spec or an unknown kind`); return; }
+    const out = kinds[s.kind](s, box), html = typeof out === 'string' ? out : out.html;
+    box.innerHTML = html + (s.kind === 'route' || s.kind === 'scope' || s.kind === 'flow' || s.kind === 'multiples' ? '' : caption(s.caption));
+    if (out.init) out.init();
+  };
+})();
+$$('[data-diagram]').forEach(diagram);
+
 // Explainer views: the toggle shows view a, view b, or both.
 $$('[data-views]').forEach(ex => {
   const buttons = [...ex.querySelectorAll('.views-toggle button')];
@@ -800,23 +806,6 @@ if (exists('rule-map')) {
     e.currentTarget.textContent = open ? 'Hide the full list' : 'Show every rule in full';
   });
   select(selected);
-}
-
-// Stepper flow: tabs choose a case. A case marks parts and lists its path. No animation.
-if (exists('flow')) {
-  const f = data.flow, svg = $('#flow'), parts = [...svg.querySelectorAll('[data-node]')];
-  const part = k => svg.querySelector(`[data-node="${k}"]`);
-  const show = id => {
-    const s = f.cases.find(x => x.id === id);
-    parts.forEach(p => p.classList.remove('reached', 'is-on', 'is-bad', 'is-ok', 'is-held'));
-    Object.entries(s.marks).forEach(([k, v]) => part(k)?.classList.add('is-' + v));
-    s.path.forEach(k => part(k)?.classList.add('reached'));
-    $('#flow-caption').innerHTML = s.caption.split('\n').map(esc).join('<br>↳ ');
-    $$('#flow-cases button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.case === id)));
-  };
-  $('#flow-cases').innerHTML = f.cases.map(s => `<button type="button" data-case="${esc(s.id)}" aria-pressed="false">${esc(s.label)}</button>`).join('');
-  $$('#flow-cases button').forEach(b => b.addEventListener('click', () => show(b.dataset.case)));
-  show(f.start || f.cases[0].id);
 }
 
 // Race: recorded medians as bars.

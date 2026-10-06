@@ -1,51 +1,9 @@
-<!-- COMPONENT: scope · One grid drawn twice. Tinted areas show where a label applies and where it leaks. -->
+<!-- COMPONENT: scope · One grid drawn twice. Tinted areas show where a label applies and where it leaks. Spec: kind "scope". -->
 <section class="chapter" aria-labelledby="scope-title">
   <div class="chapter-heading">
-    <div><p class="eyebrow">Table headings</p><h2 id="scope-title">Reader v2 keeps a local heading inside its own rows</h2><p class="lede">Each "Model" heading covers two columns. Reader v1 spreads all three into the notes row below the table.</p></div>
+    <div><p class="eyebrow">Table headings</p><h2 id="scope-title">Reader v2 keeps a local heading inside its own rows</h2><p class="lede">Each "Model" heading covers its own column. Reader v1 spreads them into the notes row.</p></div>
     <span class="tag">Concept diagram</span>
   </div>
-  <div class="explainer" data-views data-view="both" data-expand>
-    <div class="explainer-bar">
-      <div class="tabs views-toggle" aria-label="Choose view"><button type="button" data-view="a" aria-pressed="false">Reader v1</button><button type="button" data-view="b" aria-pressed="false">Reader v2</button><button type="button" data-view="both" aria-pressed="true">Side by side</button></div>
-    </div>
-    <div class="views">
-      <figure class="view a" style="margin:0">
-        <svg class="dx" viewBox="0 0 520 240" role="img" aria-label="Reader v1: the three Model headings spread into the notes row.">
-          <text class="lbl" x="8" y="18">READER V1</text>
-          <g><rect class="scope" x="7" y="75" width="118" height="146" rx="3"/></g>
-          <g><rect class="scope focus" x="131" y="75" width="118" height="146" rx="3"/></g>
-          <g><rect class="scope" x="255" y="75" width="118" height="146" rx="3"/></g>
-          <rect class="spill" x="7" y="189" width="366" height="32" rx="3"/>
-          <rect class="box" x="4" y="34" width="372" height="190"/><line class="line" x1="4" y1="72" x2="376" y2="72"/><line class="line" x1="4" y1="110" x2="376" y2="110"/><line class="line" x1="4" y1="148" x2="376" y2="148"/><line class="line" x1="4" y1="186" x2="376" y2="186"/>
-          <line class="line" x1="128" y1="72" x2="128" y2="186"/><line class="line" x1="252" y1="72" x2="252" y2="186"/>
-          <text x="190" y="58" text-anchor="middle">Pump specifications</text>
-          <text class="on-t" x="66" y="96" text-anchor="middle">Model</text><text class="on-t" x="190" y="96" text-anchor="middle">Model</text><text class="on-t" x="314" y="96" text-anchor="middle">Model</text>
-          <text class="mono mut" x="66" y="134" text-anchor="middle">EW-15</text><text class="mono mut" x="190" y="134" text-anchor="middle">EW-25</text><text class="mono mut" x="314" y="134" text-anchor="middle">EW-35</text>
-          <text class="mono mut" x="66" y="172" text-anchor="middle">0.5 L/min</text><text class="mono mut" x="190" y="172" text-anchor="middle">1.2 L/min</text><text class="mono mut" x="314" y="172" text-anchor="middle">2.0 L/min</text>
-          <text class="bad-t" x="190" y="210" text-anchor="middle">Notes · labeled Model</text>
-          <line class="line" x1="384" y1="205" x2="398" y2="205" style="stroke:var(--color-warn)"/><text class="bad-t" x="404" y="200">Model reaches</text><text class="bad-t" x="404" y="217">the notes row</text>
-        </svg>
-        <p class="caption">top headings applied to every row<br>↳ the notes row gets a label that it never had</p>
-      </figure>
-      <figure class="view b" style="margin:0">
-        <svg class="dx" viewBox="0 0 520 240" role="img" aria-label="Reader v2: each Model heading covers only its own rows. The notes row keeps the table title.">
-          <text class="lbl" x="8" y="18">READER V2</text>
-          <g><rect class="scope" x="7" y="75" width="118" height="108" rx="3"/></g>
-          <g><rect class="scope focus" x="131" y="75" width="118" height="108" rx="3"/></g>
-          <g><rect class="scope" x="255" y="75" width="118" height="108" rx="3"/></g>
-          <rect class="box" x="4" y="34" width="372" height="190"/><line class="line" x1="4" y1="72" x2="376" y2="72"/><line class="line" x1="4" y1="110" x2="376" y2="110"/><line class="line" x1="4" y1="148" x2="376" y2="148"/><line class="line" x1="4" y1="186" x2="376" y2="186"/>
-          <line class="line" x1="128" y1="72" x2="128" y2="186"/><line class="line" x1="252" y1="72" x2="252" y2="186"/>
-          <text x="190" y="58" text-anchor="middle">Pump specifications</text>
-          <text class="on-t" x="66" y="96" text-anchor="middle">Model</text><text class="on-t" x="190" y="96" text-anchor="middle">Model</text><text class="on-t" x="314" y="96" text-anchor="middle">Model</text>
-          <text class="mono mut" x="66" y="134" text-anchor="middle">EW-15</text><text class="mono mut" x="190" y="134" text-anchor="middle">EW-25</text><text class="mono mut" x="314" y="134" text-anchor="middle">EW-35</text>
-          <text class="mono mut" x="66" y="172" text-anchor="middle">0.5 L/min</text><text class="mono mut" x="190" y="172" text-anchor="middle">1.2 L/min</text><text class="mono mut" x="314" y="172" text-anchor="middle">2.0 L/min</text>
-          <text x="190" y="210" text-anchor="middle">Notes</text>
-          <path class="bracket-a" d="M386 79h8v100h-8"/><text class="on-t" x="402" y="122">Each scope ends</text><text class="on-t" x="402" y="140">above the notes</text>
-          <text x="402" y="200">Keeps the</text><text x="402" y="217">table title</text>
-        </svg>
-        <p class="caption">three cells · same word · three scopes<br>↳ each heading covers only its own two columns</p>
-      </figure>
-    </div>
-  </div>
+  <div class="explainer" data-diagram="scope" data-expand></div>
 </section>
 <!-- END: scope -->
