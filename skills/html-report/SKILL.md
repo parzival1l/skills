@@ -25,7 +25,6 @@ For a change, continue the same subagent if the harness allows it. Otherwise spa
 ## Build
 
 1. **Collect the facts.** Read the source files. Every number on the page comes from a file you read. When two sources disagree, the newest dated one wins. Name the conflict in `method`.
-   For JSON, JSONL, or CSV results, don't read the rows into the conversation. Read a few lines to learn the shape. Then go to step 5b.
 2. **Write the reader's question.** One sentence: what does the reader want to know?
 3. **Pick the components.** Use [COMPONENTS.md](COMPONENTS.md). For each chapter, ask what changes and between which states, then pick the diagram. Three to six chapters is enough.
 4. **Start the file.**
@@ -33,13 +32,12 @@ For a change, continue the same subagent if the harness allows it. Otherwise spa
    It writes two files: `report.src.html` holds the chapters you chose, and `report.data.json` holds their sample data and diagram specs.
 5. **Fill it in, in one pass.** Read both files once. Edit each chapter's eyebrow, heading, lede, and tag in `report.src.html`. Then rewrite `report.data.json` whole, in one write, with every diagram spec. Follow [WRITING.md](WRITING.md).
    - **a. List the sources.** Put every source file path in `sources` in `report.data.json`. The build records a SHA-256 for each one and stamps the build time in the footer.
-   - **b. Compute numbers with a script.** When numbers come from result files, write `<out>/collect.py`. It reads the files, computes each number, and writes it into `report.data.json`. It fails when totals don't match: for example, when the rows and the summary disagree. Run it before the build. Don't type numbers that a script can count.
-   - **c. Use real pages.** For a page image, run `python3 <skill>/scripts/page_image.py FILE.pdf --pages 2,3 -o <out>/assets`. It renders the whole page, scaled. Never crop or edit it.
+   - **b. Use real pages.** For a page image, run `python3 <skill>/scripts/page_image.py FILE.pdf --pages 2,3 -o <out>/assets`. It renders the whole page, scaled. Never crop or edit it.
 6. **Build.**
    `python3 <skill>/scripts/build_report.py <out>/report.src.html -o <out>/report.html`
    Fix every warning. A warning about words means the chapter is turning into text: move the idea into the diagram. A warning about characters means the label will collide with its neighbor: use a shorter word.
 7. **Check once.** Open the file. The console shows no errors. Each tab works. At 390px wide, the page does not scroll sideways.
-8. **Report back.** Give the file path and size, each chapter and its diagram, the components you dropped and why, and any number you could not trace to a file. Say which numbers `collect.py` computed.
+8. **Report back.** Give the file path and size, each chapter and its diagram, the components you dropped and why, and any number you could not trace to a file.
 
 ## Rules
 
