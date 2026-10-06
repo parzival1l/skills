@@ -31,8 +31,7 @@ For a change, continue the same subagent if the harness allows it. Otherwise spa
    `python3 <skill>/scripts/new_report.py --keep hero,routes,rules,method -o <out>/report.src.html`
    It writes two files: `report.src.html` holds the chapters you chose, and `report.data.json` holds their sample data and diagram specs.
 5. **Fill it in, in one pass.** Read both files once. Edit each chapter's eyebrow, heading, lede, and tag in `report.src.html`. Then rewrite `report.data.json` whole, in one write, with every diagram spec. Follow [WRITING.md](WRITING.md).
-   - **a. List the sources.** Put every source file path in `sources` in `report.data.json`. The build records a SHA-256 for each one and stamps the build time in the footer.
-   - **b. Use real pages.** For a page image, run `python3 <skill>/scripts/page_image.py FILE.pdf --pages 2,3 -o <out>/assets`. It renders the whole page, scaled. Never crop or edit it.
+   List every source file path in `sources` in `report.data.json`. The build records a SHA-256 for each one and stamps the build time in the footer.
 6. **Build.**
    `python3 <skill>/scripts/build_report.py <out>/report.src.html -o <out>/report.html`
    Fix every warning. A warning about words means the chapter is turning into text: move the idea into the diagram. A warning about characters means the label will collide with its neighbor: use a shorter word.

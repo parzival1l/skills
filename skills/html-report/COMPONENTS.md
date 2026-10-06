@@ -20,7 +20,7 @@ Ask: **what changes, and between which states?** The answer picks the component.
 | `grid` | One tile per item, with a detail box | Many items with the same two or three fields |
 | `strips` | Page ranges or spans per source | Ranges from several sources |
 | `findings` | Before and after for each bug, with a picker | Bugs, regressions, incidents |
-| `spotlight` | One real case with images that expand | One case explains the main result |
+| `spotlight` | One real case with images that expand | One case explains the main result. For a PDF page, run `scripts/page_image.py FILE.pdf --pages 2 -o <out>/assets`. Never crop the page. |
 | `lanes` | Two lanes with a gate: who approves, then who builds | Next steps, ownership, approvals |
 | `method` | Brackets under a row of steps: what the results cover and what they don't | Always. It closes the page. |
 
