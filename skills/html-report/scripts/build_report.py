@@ -6,15 +6,20 @@ Usage: build_report.py SOURCE.html [-o OUTPUT.html]
 The script resolves each local reference against the source file's folder first,
 then against this skill's assets/ folder. It inlines local stylesheets and
 scripts, CSS url(...), src="...", and image paths in the report-data block.
+
+It also stamps the build time, and records a SHA-256 for each file listed in
+report-data "sources", so a reader can tell when the page was built and from what.
 """
 from __future__ import annotations
 
 import argparse
 import base64
+import hashlib
 import json
 import mimetypes
 import re
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 SKILL_ASSETS = Path(__file__).resolve().parent.parent / "assets"
@@ -133,6 +138,7 @@ def main() -> int:
 
     source = args.source.resolve()
     base = source.parent
+    built_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
     output = args.output or source.with_name(source.stem + ".built.html")
     html = source.read_text(encoding="utf-8")
     missing: list[str] = []
@@ -200,12 +206,24 @@ def main() -> int:
 
         for note in check(html, data):
             print(f"warning: {note}", file=sys.stderr)
-        payload = json.dumps(walk(data), ensure_ascii=False).replace("</", "<\\/")
+        evidence = []
+        for ref in data.get("sources", []):
+            path = Path(ref).expanduser()
+            path = path if path.is_absolute() else (base / path)
+            if path.is_file():
+                evidence.append({"path": str(ref), "bytes": path.stat().st_size, "sha256": hashlib.sha256(path.read_bytes()).hexdigest()})
+            else:
+                print(f"warning: source file not found: {ref}", file=sys.stderr)
+        data["build"] = {"built_at": built_at, "sources": evidence}
+        payload = json.dumps(walk(data), ensure_ascii=False).replace("<", "\\u003c").replace("\u2028", "\\u2028").replace("\u2029", "\\u2029")
         html = html[: block.start(2)] + payload + html[block.end(2):]
 
+    count = len(data.get("build", {}).get("sources", [])) if block else 0
+    stamp = f"Built {built_at[:16].replace('T', ' ')} UTC" + (f" from {count} source file{'s' * (count != 1)}" if count else "")
+    html = html.replace("BUILT_AT", stamp).replace("<head>", f'<head>\n<meta name="generated" content="{built_at}">', 1)
     remote = re.findall(r"""<(?:script|link)[^>]+(?:src|href)=["']https?://[^"']+""", html)
     for tag in remote:
-        print(f"warning: remote resource breaks offline use: {tag}", file=sys.stderr)
+        print(f"warning: remote resource breaks the single-file report: {tag}", file=sys.stderr)
     for ref in sorted(set(missing)):
         print(f"warning: local file not found: {ref}", file=sys.stderr)
 

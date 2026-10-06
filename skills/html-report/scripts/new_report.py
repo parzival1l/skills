@@ -58,6 +58,7 @@ def main() -> int:
                     data[key].update(value)
                 else:
                     data[key] = value
+    data = {"sources": [], **data}
     links = '<a href="#method">Method ↓</a>' if "method" in keep else ""
 
     html = html.replace("<!-- COMPONENTS -->", body, 1)

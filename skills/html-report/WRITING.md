@@ -33,6 +33,23 @@ Write for **a tired reader whose first language isn't English**. Every sentence 
 - Show both sides: "23 of 24", not just "96%".
 - A unit after every number: "142 ms".
 - Copy every number from a source file. Never estimate.
+- Name the denominator: "6 of 8 packets", and say what one item is.
+
+## Facts and guesses
+
+- Mark a guess as a guess: "The new heading likely explains the extra cut. We infer this from the layout." Never state a cause you did not measure.
+- Say what a result does not cover. That goes in `method`.
+
+## The method section
+
+`method` answers these questions, one short line each. Skip a question that does not apply.
+
+1. **Protocol.** How many runs, retries, and what concurrency?
+2. **Sample.** How many items, from where, and are they typical?
+3. **Labels.** Who made the answer key? Did a second person check it?
+4. **Coverage.** What inputs were not tested?
+5. **Uncertainty.** Why might the result not hold elsewhere?
+6. **Sources.** Which files, with links.
 
 ## Check before you build
 
