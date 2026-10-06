@@ -152,10 +152,11 @@ const diagram = (() => {
     // One whole made of parts. One bad part holds the whole; the good parts never go alone.
     parts(s) {
       const n = s.parts.length, mid = 30 + (50 * n + 20) / 2, h = 50 * n + 60;
-      return svg(340, h, L(8, 16, s.group || 'One item') + `<rect class="group" x="4" y="30" width="130" height="${50 * n + 20}" rx="8"/>` +
-        s.parts.map((t, i) => { const bad = has(s.bad, i), y = 44 + i * 50; return `<g class="${bad ? 'is-bad' : ''}"><rect class="ring" x="18" y="${y}" width="102" height="38" rx="3"/>${T(30, y + 24, t, bad ? 'bad-t' : '')}${T(106, y + 24, bad ? '✕' : '✓', bad ? 'bad-t' : 'ok-t', 'middle')}</g>`; }).join('') +
-        `<g class="is-bad"><line class="line dash" x1="140" y1="${mid}" x2="196" y2="${mid - 50}"/></g><circle class="badc" cx="208" cy="${mid - 54}" r="8"/><line x1="202" y1="${mid - 60}" x2="214" y2="${mid - 48}" style="stroke:var(--color-warn);stroke-width:1.5"/>` +
-        many(224, mid - 58, s.reject, 'bad-t') + arrow(140, 196, mid + 25) + `<circle class="heldc" cx="208" cy="${mid + 25}" r="8"/>` + many(224, mid + 21, s.result, 'held-t'), s.aria);
+      const bw = Math.max(102, Math.max(...s.parts.map(t => String(t).length)) * 8 + 40), d = bw - 102;
+      return svg(340 + d, h, L(8, 16, s.group || 'One item') + `<rect class="group" x="4" y="30" width="${130 + d}" height="${50 * n + 20}" rx="8"/>` +
+        s.parts.map((t, i) => { const bad = has(s.bad, i), y = 44 + i * 50; return `<g class="${bad ? 'is-bad' : ''}"><rect class="ring" x="18" y="${y}" width="${bw}" height="38" rx="3"/>${T(30, y + 24, t, bad ? 'bad-t' : '')}${T(bw + 4, y + 24, bad ? '✕' : '✓', bad ? 'bad-t' : 'ok-t', 'middle')}</g>`; }).join('') +
+        `<g transform="translate(${d} 0)"><g class="is-bad"><line class="line dash" x1="140" y1="${mid}" x2="196" y2="${mid - 50}"/></g><circle class="badc" cx="208" cy="${mid - 54}" r="8"/><line x1="202" y1="${mid - 60}" x2="214" y2="${mid - 48}" style="stroke:var(--color-warn);stroke-width:1.5"/>` +
+        many(224, mid - 58, s.reject, 'bad-t') + arrow(140, 196, mid + 25) + `<circle class="heldc" cx="208" cy="${mid + 25}" r="8"/>` + many(224, mid + 21, s.result, 'held-t') + '</g>', s.aria);
     },
 
     // Every attempt fails, so the item is held. The count of tries is not approval.

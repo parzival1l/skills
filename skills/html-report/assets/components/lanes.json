@@ -25,7 +25,8 @@
    "gate": "approve",
    "end": "make verify",
    "caption": [
-    "solid: files that exist today · dashed: work that waits for approval"
+    "solid: files that exist today",
+    "dashed: work that waits for approval"
    ]
   }
  }

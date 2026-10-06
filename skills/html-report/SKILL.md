@@ -33,14 +33,14 @@ For a change, continue the same subagent if the harness allows it. Otherwise spa
 5. **Fill it in, in one pass.** Read both files once. Edit each chapter's eyebrow, heading, lede, and tag in `report.src.html`. Then rewrite `report.data.json` whole, in one write, with every diagram spec. Follow [WRITING.md](WRITING.md).
 6. **Build.**
    `python3 <skill>/scripts/build_report.py <out>/report.src.html -o <out>/report.html`
-   Fix every warning. A warning about words means the chapter is turning into text: move the idea into the diagram.
+   Fix every warning. A warning about words means the chapter is turning into text: move the idea into the diagram. A warning about characters means the label will collide with its neighbor: use a shorter word.
 7. **Check once.** Open the file. The console shows no errors. Each tab works. At 390px wide, the page does not scroll sideways.
 8. **Report back.** Give the file path and size, each chapter and its diagram, the components you dropped and why, and any number you could not trace to a file.
 
 ## Rules
 
-1. **Draw, don't describe.** Each chapter is a heading, a lede of one or two sentences, and one diagram or table. Nothing else. A chapter has 60 words or fewer outside its diagram. The build counts this. `hero`, `rules`, `findings`, and `method` are exempt.
-2. **Diagrams are JSON specs.** The page draws them in one fixed style: shapes carry the meaning, labels stay one to four words. The page moves only through tabs, the expand button, scrolling tables, and selecting a rule.
+1. **Draw, don't describe.** Each chapter is a heading, a lede of one or two sentences, and one diagram or table. Nothing else. A chapter has 60 words or fewer outside its diagram. The build counts this.
+2. **Diagrams are JSON specs.** The page draws them in one fixed style: shapes carry the meaning, and labels stay short enough to fit their slot. The page moves only through tabs, the expand button, scrolling tables, and selecting a rule.
 3. **The main point needs no click.** Each diagram shows its result as the page loads.
 4. **Headings are full sentences.** One finding, a subject and a verb, no final period.
 5. **Measured numbers only.** If a number needs a disclaimer, drop it. The hero stat rail is for measured results. A proposal puts its counts, such as tests that pass, in `method`.
@@ -52,7 +52,7 @@ For a change, continue the same subagent if the harness allows it. Otherwise spa
 - **Don't read `assets/report.css` or `assets/report.js`.** The build step adds them. The class names you need are in [COMPONENTS.md](COMPONENTS.md).
 - **Don't copy the sample file.** Start with `new_report.py`, so the file holds only what the report needs.
 - **Don't hand-write SVG.** Write a diagram spec. If no kind fits, use the closest one and say so.
-- **Don't write paragraphs in chapters.** Sources, caveats, and file lists go in `method`. One notice in `hero` is the limit.
+- **Don't write paragraphs in chapters.** The hero is a headline, one summary paragraph, and one short notice: 70 words. `method` has three blocks at most: what was measured, what the page does not show, and the sources: 120 words. Cut anything else. Don't move it to `method`.
 - **Don't add hover effects, animation, or play buttons.** They cost time and add nothing a tab can't do.
 - **Don't add a component the evidence doesn't support.** Drop it and say why.
 - **Don't loop on screenshots.** Check once. Fix real breakage only.

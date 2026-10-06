@@ -38,10 +38,23 @@ def data_uri(path: Path) -> str:
 
 
 KINDS = {"route", "scope", "flow", "multiples", "split", "parts", "attempts", "brackets", "lanes"}
-SHORT = {"inputs", "lanes", "items", "groups", "parts", "label", "node", "gate", "end", "head", "group", "left", "right", "ok", "hold", "tabs", "tab", "last"}
-FREE = {"caption", "titles", "title", "aria", "kind"}
+FREE = {"titles", "title", "aria", "kind", "id", "shape", "state", "reach", "tone"}
 VISUAL = ("data-diagram", "<svg", "<table", 'id="rule-map"', 'id="tile-grid"', 'id="strip-rows"', 'id="race-tracks"', "figure-pair")
-CHAPTER_WORDS = 60
+CHAPTER_WORDS, HERO_WORDS, METHOD_WORDS, METHOD_BLOCKS = 60, 70, 120, 3
+CAPTION_LINES, CAPTION_CHARS = 2, 60
+# The most characters that fit in each slot before text collides. Key: (kind, field).
+CHARS = {
+    ("route", "inputs"): 16, ("route", "lanes"): 14, ("route", "notes"): 24, ("route", "node"): 14, ("route", "sub"): 14,
+    ("route", "gate"): 12, ("route", "end"): 12, ("route", "head"): 14, ("route", "group"): 16, ("route", "tabs"): 20,
+    ("scope", "groups"): 14, ("scope", "values"): 12, ("scope", "notes"): 18, ("scope", "last"): 14, ("scope", "tabs"): 20,
+    ("flow", "label"): 18, ("flow", "sub"): 18, ("flow", "note"): 44, ("flow", "held"): 22, ("flow", "tab"): 24,
+    ("split", "items"): 10, ("split", "ok"): 10, ("split", "hold"): 10, ("split", "left"): 10, ("split", "right"): 10,
+    ("parts", "parts"): 18, ("parts", "group"): 16, ("parts", "reject"): 18, ("parts", "result"): 18,
+    ("attempts", "label"): 16, ("attempts", "fail"): 18, ("attempts", "result"): 10, ("attempts", "note"): 30,
+    ("brackets", "label"): 18, ("brackets", "note"): 36, ("lanes", "label"): 8, ("lanes", "items"): 16,
+    ("lanes", "gate"): 12, ("lanes", "end"): 14,
+}
+DEFAULT_CHARS = 30
 
 
 def words(text: str) -> int:
@@ -49,19 +62,31 @@ def words(text: str) -> int:
 
 
 def check(html: str, data: dict) -> list[str]:
-    """Warn when a chapter turns into text, or a diagram label turns into a sentence."""
+    """Warn when a chapter turns into text, or a diagram label is too long for its slot."""
     notes = []
     html = html.split('<script id="report-data"')[0]
-    for m in re.finditer(r'<section class="chapter"([^>]*)>(.*?)</section>', html, re.S):
-        attrs, body = m.groups()
-        if 'id="method"' in attrs or 'id="finding-grid"' in body:
+    for m in re.finditer(r'<section class="(chapter|hero)"([^>]*)>(.*?)</section>', html, re.S):
+        cls, attrs, body = m.groups()
+        if 'id="finding-grid"' in body:
             continue
-        title = re.search(r"<h2[^>]*>(.*?)</h2>", body, re.S)
+        title = re.search(r"<h[12][^>]*>(.*?)</h[12]>", body, re.S)
         name = re.sub(r"<[^>]+>", "", title.group(1)).strip() if title else "a chapter"
-        if not any(v in body for v in VISUAL):
-            notes.append(f'chapter "{name}" has no diagram or table')
         text = re.sub(r"<(svg|template|script)\b.*?</\1>", " ", body, flags=re.S)
         count = words(re.sub(r"<[^>]+>", " ", text))
+        if cls == "hero":
+            subs = re.findall(r'<p class="hero-sub"[^>]*>(.*?)</p>', body, re.S)
+            parts = re.findall(r"<h1[^>]*>(.*?)</h1>", body, re.S) + subs + re.findall(r'<(?:p|div) class="notice"[^>]*>(.*?)</(?:p|div)>', body, re.S)
+            count = sum(words(re.sub(r"<[^>]+>", " ", p)) for p in parts)
+            if count > HERO_WORDS or len(subs) > 1:
+                notes.append(f'the hero has {count} words in its headline, summary, and notice (limit {HERO_WORDS}). Keep one summary paragraph and one short notice.')
+            continue
+        if 'id="method"' in attrs:
+            blocks = body.count("<h3")
+            if count > METHOD_WORDS or blocks > METHOD_BLOCKS:
+                notes.append(f'method has {count} words in {blocks} blocks (limit {METHOD_WORDS} words, {METHOD_BLOCKS} blocks). Keep what was measured, what the page does not show, and the sources. Cut the rest.')
+            continue
+        if not any(v in body for v in VISUAL):
+            notes.append(f'chapter "{name}" has no diagram or table')
         if count > CHAPTER_WORDS:
             notes.append(f'chapter "{name}" has {count} words outside its diagram (limit {CHAPTER_WORDS}). Move the explanation into the diagram.')
     diagrams = data.get("diagrams", {})
@@ -69,24 +94,34 @@ def check(html: str, data: dict) -> list[str]:
         if key not in diagrams:
             notes.append(f'data-diagram="{key}" has no spec in report-data diagrams')
 
-    def walk(node, key, where):
+    def walk(node, kind, key, where):
         if key in FREE:
             return
+        if key == "caption":
+            for path, lines in (node.items() if isinstance(node, dict) else [("", node)]):
+                lines = [lines] if isinstance(lines, str) else lines
+                if len(lines) > CAPTION_LINES:
+                    notes.append(f"{where}{'.' + path if path else ''} has {len(lines)} lines (limit {CAPTION_LINES}).")
+                for line in lines:
+                    if len(line) > CAPTION_CHARS:
+                        notes.append(f'{where} "{line}" has {len(line)} characters (limit {CAPTION_CHARS}).')
+            return
         if isinstance(node, dict):
-            if "kind" in node and node["kind"] not in KINDS:
-                notes.append(f'{where}: unknown kind "{node["kind"]}"')
+            kind = node.get("kind", kind)
+            if "kind" in node and kind not in KINDS:
+                notes.append(f'{where}: unknown kind "{kind}"')
             for k, v in node.items():
-                walk(v, k, f"{where}.{k}")
+                walk(v, kind, k, f"{where}.{k}")
         elif isinstance(node, list):
             for i, v in enumerate(node):
-                walk(v, key, f"{where}[{i}]")
+                walk(v, kind, key, f"{where}[{i}]")
         elif isinstance(node, str):
-            limit = 4 if key in SHORT else 8
-            if words(node) > limit:
-                notes.append(f'{where} "{node}" has {words(node)} words (limit {limit}). Shorten it, or show it with a shape.')
+            limit = CHARS.get((kind, key), DEFAULT_CHARS)
+            if len(node) > limit:
+                notes.append(f'{where} "{node}" has {len(node)} characters (limit {limit} for {kind} {key}). Shorten it, or show it with a shape.')
 
     for key, spec in diagrams.items():
-        walk(spec, "", f"diagrams.{key}")
+        walk(spec, "", "", f"diagrams.{key}")
     return notes
 
 

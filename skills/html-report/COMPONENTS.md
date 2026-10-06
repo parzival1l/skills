@@ -55,7 +55,7 @@ The specs in your `report.data.json` already work. Change their words and counts
 | `lanes` | `lanes` [{`label`, `items`}, {`label`, `items`}], `gate`, `end` |
 | `brackets` | `steps` [{`label`, `shape`: page, ring, dot, pair, or gate, `note`}], `brackets` [{`from`, `to`, `label`, `note`, `tone`: on or held}] |
 
-**Labels are one to four words.** Notes and captions are eight words or fewer per line. The build warns when a label grows into a sentence. When that happens, show the idea with a shape, a state, or a second diagram.
+**Labels fit their slot.** Each slot has a character limit, about 10 to 18 for labels. Captions are two lines at most, 60 characters each. The build names the limit when a label is too long. When that happens, show the idea with a shape, a state, or a second diagram.
 
 If no kind fits, pick the closest one and say so in your summary. Don't hand-write SVG.
 
