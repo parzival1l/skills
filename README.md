@@ -20,5 +20,6 @@ npx skills@latest add parzival1l/skills --skill bro
 ## Skills
 
 - [bro](skills/bro/SKILL.md): Restate the last message in plain language.
+- [html-report](skills/html-report/SKILL.md): Build an interactive, single-file HTML report, dark by default with a light-mode switch.
 
 Each skill lives in `skills/<name>/SKILL.md`. See [skills/README.md](skills/README.md) for credits and [CHANGELOG.md](CHANGELOG.md) for updates.
