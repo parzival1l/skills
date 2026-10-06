@@ -1,0 +1,106 @@
+{
+  "engines": {
+    "a": "Reader v2",
+    "b": "Reader v1"
+  },
+  "groups": [
+    {
+      "id": "manual",
+      "label": "Manuals",
+      "color": "var(--color-cat-1)"
+    },
+    {
+      "id": "datasheet",
+      "label": "Datasheets",
+      "color": "var(--color-cat-2)"
+    },
+    {
+      "id": "notice",
+      "label": "Notices",
+      "color": "var(--color-cat-3)"
+    },
+    {
+      "id": "form",
+      "label": "Forms",
+      "color": "var(--color-cat-4)"
+    }
+  ],
+  "items": [
+    {
+      "id": "d01",
+      "title": "WDS controller manual",
+      "group": "manual",
+      "pages": 12,
+      "href": "#",
+      "a": {
+        "ok": true,
+        "value": "manual",
+        "ms": 140.2,
+        "flag": false
+      },
+      "b": {
+        "ok": true,
+        "value": "manual",
+        "ms": 790.4,
+        "flag": false
+      }
+    },
+    {
+      "id": "d02",
+      "title": "Electrode datasheet",
+      "group": "datasheet",
+      "pages": 2,
+      "href": "#",
+      "a": {
+        "ok": true,
+        "value": "datasheet",
+        "ms": 131.0,
+        "flag": false
+      },
+      "b": {
+        "ok": false,
+        "value": "manual",
+        "ms": 802.7,
+        "flag": true
+      }
+    },
+    {
+      "id": "d03",
+      "title": "Recall notice",
+      "group": "notice",
+      "pages": 1,
+      "href": "#",
+      "a": {
+        "ok": false,
+        "value": "form",
+        "ms": 150.3,
+        "flag": true
+      },
+      "b": {
+        "ok": true,
+        "value": "notice",
+        "ms": 760.0,
+        "flag": false
+      }
+    },
+    {
+      "id": "d04",
+      "title": "Warranty claim form",
+      "group": "form",
+      "pages": 3,
+      "href": "#",
+      "a": {
+        "ok": true,
+        "value": "form",
+        "ms": 128.8,
+        "flag": false
+      },
+      "b": {
+        "ok": true,
+        "value": "form",
+        "ms": 835.1,
+        "flag": false
+      }
+    }
+  ]
+}

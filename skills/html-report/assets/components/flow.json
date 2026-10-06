@@ -1,0 +1,94 @@
+{
+  "flow": {
+    "start": "retry",
+    "cases": [
+      {
+        "id": "first",
+        "label": "Passes on attempt 1",
+        "path": [
+          "source",
+          "e1",
+          "parse",
+          "e2",
+          "read",
+          "e3",
+          "review",
+          "e4",
+          "gate",
+          "a1",
+          "e5",
+          "save"
+        ],
+        "marks": {
+          "read": "on",
+          "review": "on",
+          "a1": "on",
+          "e5": "ok",
+          "save": "ok"
+        },
+        "caption": "attempt 1 passes the gate · the whole document saves\nthe review is a separate call with its own response ID"
+      },
+      {
+        "id": "retry",
+        "label": "Passes on attempt 2",
+        "path": [
+          "source",
+          "e1",
+          "parse",
+          "e2",
+          "read",
+          "e3",
+          "review",
+          "e4",
+          "gate",
+          "a1",
+          "loop",
+          "a2",
+          "e5",
+          "save"
+        ],
+        "marks": {
+          "read": "on",
+          "review": "on",
+          "a1": "bad",
+          "loop": "bad",
+          "a2": "on",
+          "e5": "ok",
+          "save": "ok"
+        },
+        "caption": "attempt 1 fails the gate · attempt 2 passes · the whole document saves\nthe failed attempt sends exact feedback to the next one"
+      },
+      {
+        "id": "held",
+        "label": "Held after 3",
+        "path": [
+          "source",
+          "e1",
+          "parse",
+          "e2",
+          "read",
+          "e3",
+          "review",
+          "e4",
+          "gate",
+          "a1",
+          "loop",
+          "a2",
+          "a3",
+          "e6",
+          "held"
+        ],
+        "marks": {
+          "read": "on",
+          "review": "on",
+          "a1": "bad",
+          "a2": "bad",
+          "a3": "bad",
+          "loop": "bad",
+          "held": "held"
+        },
+        "caption": "three attempts fail the gate · the document is held\nthe evidence stays · the queue moves on"
+      }
+    ]
+  }
+}

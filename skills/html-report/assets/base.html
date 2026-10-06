@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<meta name="description" content="REPORT_DESCRIPTION">
+<title>REPORT_TITLE</title>
+<script>
+// Dark by default. A saved choice wins. Runs before paint to avoid a flash.
+try { const t = localStorage.getItem('report-theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+<link rel="stylesheet" href="report.css">
+</head>
+<body>
+<noscript><p class="notice">Turn on JavaScript to filter and compare the recorded results.</p></noscript>
+
+<!-- COMPONENT: topbar -->
+<header class="topbar">
+  <a class="brand" href="#top"><strong>PROJECT</strong><span>REPORT_NAME</span></a>
+  <nav class="toplinks" aria-label="Report navigation"><!-- TOPLINKS --><button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false">Light mode</button></nav>
+</header>
+
+<main id="top">
+<!-- COMPONENTS -->
+</main>
+
+<footer class="footer"><p>PROJECT · DATE<br>Built from recorded results.</p><p>Source link ↗<br>Run RUN_ID · no live calls</p></footer>
+
+<dialog class="zoom-dialog" id="zoom-dialog"><header><span id="zoom-title"></span><button type="button" class="button-quiet" id="zoom-close">Close ×</button></header><img id="zoom-img" alt=""><div class="zoom-body" id="zoom-body" hidden></div></dialog>
+
+<!-- DATA: scripts/new_report.py fills this block from the component data. -->
+<script id="report-data" type="application/json">
+/* REPORT_DATA */
+</script>
+
+<script src="report.js"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+{
+  "engines": {
+    "a": "Reader v2",
+    "b": "Reader v1"
+  },
+  "race": {
+    "classify": {
+      "label": "Classify",
+      "unit": "ms",
+      "count": "24 documents",
+      "a": {
+        "p50": 142.3,
+        "p95": 190.1
+      },
+      "b": {
+        "p50": 811.0,
+        "p95": 1204.6
+      }
+    },
+    "split": {
+      "label": "Split",
+      "unit": "ms",
+      "count": "6 packets",
+      "a": {
+        "p50": 214.9,
+        "p95": 290.0
+      },
+      "b": {
+        "p50": 1352.4,
+        "p95": 1720.2
+      }
+    }
+  },
+  "breakdown": {
+    "tag": "60 of 60 tasks",
+    "total": "4.1",
+    "unit": "¢",
+    "detail": "Estimated API cost for both readers, with warmups.",
+    "rows": [
+      {
+        "label": "Reader v2",
+        "note": "30 tasks",
+        "value": 0.0081,
+        "display": "$0.0081",
+        "color": "var(--color-accent)"
+      },
+      {
+        "label": "Reader v1",
+        "note": "30 tasks",
+        "value": 0.0302,
+        "display": "$0.0302",
+        "color": "var(--color-secondary)"
+      },
+      {
+        "label": "Warmups",
+        "note": "4 calls",
+        "value": 0.0027,
+        "display": "$0.0027",
+        "color": "var(--color-line-strong)"
+      }
+    ]
+  }
+}

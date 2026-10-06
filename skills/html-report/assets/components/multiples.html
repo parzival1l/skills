@@ -1,0 +1,57 @@
+<!-- COMPONENT: multiples · Three small diagrams, one idea each. -->
+<section class="chapter" aria-labelledby="multiples-title">
+  <div class="chapter-heading">
+    <div><p class="eyebrow">Failures</p><h2 id="multiples-title">A held document keeps its evidence and never stops the queue</h2><p class="lede">The worker holds the failed document and moves on. It never saves the pages that pass.</p></div>
+  </div>
+  <div class="multiples">
+    <figure data-expand>
+      <h3>The queue keeps moving</h3>
+      <svg class="dx" viewBox="0 0 340 210" role="img" aria-label="Five documents. Document 3 is held. The other four save.">
+        <text class="lbl" x="78" y="16" text-anchor="middle">QUEUE</text><line class="line" x1="96" y1="44" x2="96" y2="188"/>
+        <text x="80" y="49" text-anchor="end">doc 1</text><circle class="ring" cx="96" cy="44" r="8"/>
+        <text x="80" y="85" text-anchor="end">doc 2</text><circle class="ring" cx="96" cy="80" r="8"/>
+        <text x="80" y="121" text-anchor="end">doc 3</text><circle class="ring" cx="96" cy="116" r="8"/>
+        <text x="80" y="157" text-anchor="end">doc 4</text><circle class="ring" cx="96" cy="152" r="8"/>
+        <text x="80" y="193" text-anchor="end">doc 5</text><circle class="ring" cx="96" cy="188" r="8"/>
+        <line class="line" x1="124" y1="116" x2="158" y2="116"/><path class="tip" d="M164 116l-7-4v8z"/>
+        <text class="lbl" x="200" y="16" text-anchor="middle">AFTER</text><line class="line" x1="190" y1="44" x2="190" y2="188"/>
+        <circle class="okc" cx="190" cy="44" r="8"/><text x="206" y="49">doc 1 saved</text>
+        <circle class="okc" cx="190" cy="80" r="8"/><text x="206" y="85">doc 2 saved</text>
+        <path class="line dash" d="M190 116H232"/><circle class="heldc" cx="244" cy="116" r="8"/><text class="held-t" x="260" y="121">held</text>
+        <circle class="okc" cx="190" cy="152" r="8"/><text x="206" y="157">doc 4 saved</text>
+        <circle class="okc" cx="190" cy="188" r="8"/><text x="206" y="193">doc 5 saved</text>
+      </svg>
+      <p class="caption">doc 3 waits with its evidence<br>↳ docs 1, 2, 4, and 5 save</p>
+    </figure>
+    <figure data-expand>
+      <h3>Nothing saves in part</h3>
+      <svg class="dx" viewBox="0 0 340 210" role="img" aria-label="A document with three pages. Page 3 fails. Pages 1 and 2 never save alone. The whole document is held.">
+        <text class="lbl" x="8" y="16">ONE DOCUMENT</text><rect class="group" x="4" y="30" width="130" height="170" rx="8"/>
+        <rect class="ring" x="18" y="44" width="102" height="38" rx="3"/><text x="30" y="68">page 1</text><text class="ok-t" x="106" y="68" text-anchor="middle">✓</text>
+        <rect class="ring" x="18" y="94" width="102" height="38" rx="3"/><text x="30" y="118">page 2</text><text class="ok-t" x="106" y="118" text-anchor="middle">✓</text>
+        <g class="is-bad"><rect class="ring" x="18" y="144" width="102" height="38" rx="3"/><text class="bad-t" x="30" y="168">page 3</text><text class="bad-t" x="106" y="168" text-anchor="middle">✕</text></g>
+        <g class="is-bad"><line class="line dash" x1="140" y1="115" x2="196" y2="68"/></g>
+        <circle class="badc" cx="208" cy="64" r="8"/><line x1="202" y1="58" x2="214" y2="70" style="stroke:var(--color-warn);stroke-width:1.5"/>
+        <text class="bad-t" x="224" y="60">pages 1–2 alone</text><text class="bad-t" x="224" y="78">never save</text>
+        <line class="line" x1="140" y1="140" x2="190" y2="140"/><path class="tip" d="M196 140l-7-4v8z"/>
+        <circle class="heldc" cx="208" cy="140" r="8"/><text class="held-t" x="224" y="136">whole document</text><text class="held-t" x="224" y="154">held</text>
+      </svg>
+      <p class="caption">one failed page holds the document<br>↳ no partial save</p>
+    </figure>
+    <figure data-expand>
+      <h3>Retries never turn into a pass</h3>
+      <svg class="dx" viewBox="0 0 340 210" role="img" aria-label="Three attempts fail. The document is held. Retries do not save it.">
+        <text class="lbl" x="8" y="16">ATTEMPTS</text>
+        <line class="line" x1="30" y1="70" x2="150" y2="70"/>
+        <g class="is-bad"><circle class="ring" cx="30" cy="70" r="12"/><text class="num-t" x="30" y="74" text-anchor="middle">1</text><circle class="ring" cx="90" cy="70" r="12"/><text class="num-t" x="90" y="74" text-anchor="middle">2</text><circle class="ring" cx="150" cy="70" r="12"/><text class="num-t" x="150" y="74" text-anchor="middle">3</text></g>
+        <text class="bad-t" x="90" y="108" text-anchor="middle">each one fails</text>
+        <line class="line" x1="172" y1="70" x2="226" y2="70"/><path class="tip" d="M232 70l-7-4v8z"/>
+        <circle class="heldc" cx="250" cy="70" r="12"/><text class="held-t" x="250" y="108" text-anchor="middle">held</text>
+        <path class="line dash" d="M250 120V160H286"/><circle class="ring" cx="300" cy="160" r="9"/><line x1="293" y1="153" x2="307" y2="167" style="stroke:var(--color-warn);stroke-width:1.5"/>
+        <text class="mut" x="240" y="196" text-anchor="middle">three tries do not save it</text>
+      </svg>
+      <p class="caption">three failures end in a hold<br>↳ the attempt count is not approval</p>
+    </figure>
+  </div>
+</section>
+<!-- END: multiples -->

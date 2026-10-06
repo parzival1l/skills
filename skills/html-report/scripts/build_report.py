@@ -4,8 +4,8 @@
 Usage: build_report.py SOURCE.html [-o OUTPUT.html]
 
 The script resolves each local reference against the source file's folder first,
-then against this skill's assets/ folder. It inlines CSS url(...), src="...",
-and image paths inside the report-data JSON block.
+then against this skill's assets/ folder. It inlines local stylesheets and
+scripts, CSS url(...), src="...", and image paths in the report-data block.
 """
 from __future__ import annotations
 
@@ -67,6 +67,24 @@ def main() -> int:
         uri = inline(m.group(2))
         return f'src="{uri}"' if uri else m.group(0)
 
+    def local_text(ref: str) -> str | None:
+        path = resolve(ref, base)
+        if path is None:
+            missing.append(ref)
+            return None
+        return path.read_text(encoding="utf-8")
+
+    def stylesheet(m: re.Match) -> str:
+        text = local_text(m.group(1))
+        return f"<style>\n{text}</style>" if text is not None else m.group(0)
+
+    def script(m: re.Match) -> str:
+        text = local_text(m.group(1))
+        return f"<script>\n{text}</script>" if text is not None else m.group(0)
+
+    # Shared CSS and scripts first, so their font urls get inlined below.
+    html = re.sub(r"""<link rel="stylesheet" href="(?!https?:)([^"]+)">""", stylesheet, html)
+    html = re.sub(r"""<script src="(?!https?:)([^"]+)"></script>""", script, html)
     html = re.sub(r"""url\((['"]?)([^'")]+)\1\)""", css_url, html)
     html = re.sub(r"""src=(["'])([^"']+)\1""", src_attr, html)
 

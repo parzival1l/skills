@@ -1,0 +1,51 @@
+{
+  "compare": {
+    "columns": [
+      "Field",
+      "Reader v2",
+      "Reader v1"
+    ],
+    "rows": [
+      {
+        "field": "Model number",
+        "a": "WDS-410",
+        "b": "WDS-410"
+      },
+      {
+        "field": "Voltage",
+        "a": "100–240 VAC",
+        "b": "100–240 VAC"
+      },
+      {
+        "field": "Max pressure",
+        "a": "150 psi (10 bar)",
+        "b": "150 psi"
+      },
+      {
+        "field": "Operating temperature",
+        "a": "0–50 °C",
+        "b": "0–50 °C"
+      },
+      {
+        "field": "Enclosure rating",
+        "a": "NEMA 4X",
+        "b": "NEMA 4"
+      },
+      {
+        "field": "Relay outputs",
+        "a": "4",
+        "b": "4"
+      },
+      {
+        "field": "Warranty",
+        "a": "2 years",
+        "b": "Not found"
+      },
+      {
+        "field": "Weight",
+        "a": "3.2 kg",
+        "b": "3.2 kg"
+      }
+    ]
+  }
+}

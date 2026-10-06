@@ -1,0 +1,30 @@
+<!-- COMPONENT: hero · Headline, summary, stat rail, scorecards. The h1 is one full sentence with the key phrase in <em>. -->
+<section class="hero" aria-labelledby="headline">
+  <div class="hero-top"><p class="eyebrow">Project · Report type · Month year</p><span class="live-pill">60 of 60 tasks complete</span></div>
+  <h1 id="headline">Reader v2 is <em>six times faster</em> and keeps its accuracy</h1>
+  <p class="hero-sub">We ran both readers on the same 24 documents. This page shows the speed, the cost, and every result.</p>
+  <!-- Stat rail: measured numbers only. If a number needs a disclaimer, it does not go here. -->
+  <div class="stat-rail">
+    <div><strong>24</strong><small>documents</small></div>
+    <div><strong>96</strong><small>pages</small></div>
+    <div><strong>2</strong><small>readers compared</small></div>
+    <div><strong>4.1¢</strong><small>total API cost</small></div>
+  </div>
+  <div class="scorecards">
+    <article class="scorecard lead">
+      <div class="card-top"><h2>Classification is faster with Reader v2</h2><span>Task 1</span></div>
+      <div class="big-figure"><strong>142</strong><small>ms</small></div>
+      <p class="figure-label">Median time for Reader v2. Reader v1 takes 811 ms, which is 5.7× longer.</p>
+      <div class="card-split"><div><p>Reader v2</p><b>23 of 24</b><small>documents correct</small></div><div><p>Reader v1</p><b>21 of 24</b><small>documents correct</small></div></div>
+    </article>
+    <article class="scorecard">
+      <div class="card-top"><h2>Both readers find the page ranges</h2><span>Task 2</span></div>
+      <div class="big-figure"><strong>6 of 6</strong></div>
+      <p class="figure-label">Reader v2 gets the exact page range in every packet.</p>
+      <div class="card-split"><div><p>Reader v2</p><b>6 of 6</b><small>packets exact</small></div><div><p>Reader v1</p><b>5 of 6</b><small>packets exact</small></div></div>
+    </article>
+  </div>
+  <!-- Optional: one limit the reader must know before they trust the numbers. -->
+  <div class="notice"><strong>Local run only.</strong> We did not deploy these changes. The results come from one local run.</div>
+</section>
+<!-- END: hero -->

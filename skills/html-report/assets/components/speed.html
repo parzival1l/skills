@@ -1,0 +1,23 @@
+<!-- COMPONENT: speed · Bars for recorded time, and a cost breakdown. -->
+<section class="chapter" aria-labelledby="speed-title">
+  <div class="chapter-heading">
+    <div><p class="eyebrow">Time and cost</p><h2 id="speed-title">Reader v2 uses less time and costs less</h2></div>
+    <div class="legend"><span><i class="swatch"></i><span data-bind="engines.a"></span></span><span><i class="swatch b"></i><span data-bind="engines.b"></span></span></div>
+  </div>
+  <div class="split-layout">
+    <article class="panel">
+      <div class="panel-title"><h3>Decision time</h3><div class="tabs" id="race-tabs" aria-label="Choose task"></div></div>
+      <p class="meta" id="race-meta"></p>
+      <div id="race-tracks"></div>
+      <div class="race-foot"><span></span><span class="meta" id="race-p95"></span></div>
+    </article>
+    <article class="panel">
+      <div class="panel-title"><h3>Cost of the full run</h3><span class="tag" id="breakdown-tag"></span></div>
+      <p class="big-number" id="breakdown-total"></p>
+      <p class="big-number-detail" id="breakdown-detail"></p>
+      <div class="stack" id="breakdown-stack" aria-hidden="true"></div>
+      <table class="ledger"><tbody id="breakdown-rows"></tbody></table>
+    </article>
+  </div>
+</section>
+<!-- END: speed -->

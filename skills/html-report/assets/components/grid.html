@@ -1,0 +1,14 @@
+<!-- COMPONENT: grid · One tile per item, with a detail box. -->
+<section class="chapter" aria-labelledby="explorer-title">
+  <div class="chapter-heading">
+    <div><p class="eyebrow">Every document</p><h2 id="explorer-title">Reader v2 is correct on 23 of 24 documents</h2><p class="lede">Each tile is one document. Select a tile to see both results and their times.</p></div>
+    <span class="tag" id="explorer-tag"></span>
+  </div>
+  <div class="filter-bar">
+    <label class="count" for="group-filter">Group</label><select id="group-filter" class="search" style="flex:0 1 220px"><option value="all">All groups</option></select>
+    <div class="legend"><span><i class="swatch"></i><span data-bind="engines.a" data-suffix=" correct"></span></span><span><i class="swatch b"></i><span data-bind="engines.b" data-suffix=" correct"></span></span></div>
+  </div>
+  <div class="tile-grid" id="tile-grid" aria-label="Recorded results"></div>
+  <div class="detail-box" id="detail-box" aria-live="polite"></div>
+</section>
+<!-- END: grid -->

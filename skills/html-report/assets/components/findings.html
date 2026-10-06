@@ -1,0 +1,32 @@
+<!-- COMPONENT: findings · Before and after for each bug, with a picker. -->
+<section class="chapter" aria-labelledby="findings-title">
+  <div class="chapter-heading">
+    <div><p class="eyebrow">Findings</p><h2 id="findings-title">Two failures now have fixes and passing tests</h2><p class="lede">Select a finding to see the failure and its fix. Select "Show all" to read every finding.</p></div>
+    <button type="button" class="button-quiet" id="show-all-findings">Show all</button>
+  </div>
+  <div class="finding-grid" id="finding-grid">
+    <button type="button" class="finding-tile" data-target="finding-01" aria-pressed="true"><code>F-01 · Knowledge</code><strong>The panel hides its own error</strong><span>Fixed · test passes</span></button>
+    <button type="button" class="finding-tile" data-target="finding-02" aria-pressed="false"><code>F-02 · Forms</code><strong>Chat starts before the form finishes</strong><span>Fixed · test passes</span></button>
+  </div>
+  <p class="note" id="finding-status" role="status" style="margin-top:14px"></p>
+  <article class="finding" id="finding-01">
+    <div class="finding-head"><span>F-01</span><span class="badge">Fixed · test passes</span></div>
+    <h2>The document list hides the error that it shows</h2>
+    <p>The list request fails. The page writes an error message, but it also hides the panel that holds the message.</p>
+    <div class="pair">
+      <div class="before"><h3>Before the fix</h3><ol><li>Open Knowledge.</li><li>Make the list request fail.</li></ol><pre>observed: no node (match count 0)</pre></div>
+      <div class="after"><h3>After the fix</h3><p>The panel stays visible when an error exists.</p><pre>Regression: PASS</pre></div>
+    </div>
+    <details><summary>Exact change</summary><pre>before → after</pre></details>
+  </article>
+  <article class="finding" id="finding-02">
+    <div class="finding-head"><span>F-02</span><span class="badge">Fixed · test passes</span></div>
+    <h2>The user can send a chat message while form answers are sending</h2>
+    <p>The form request does not turn off the send button. The user can start a second request too early.</p>
+    <div class="pair">
+      <div class="before"><h3>Before the fix</h3><pre>sendEnabled: true</pre></div>
+      <div class="after"><h3>After the fix</h3><pre>sendEnabled: false</pre></div>
+    </div>
+  </article>
+</section>
+<!-- END: findings -->

@@ -1,0 +1,14 @@
+<!-- COMPONENT: rules · Short rule names in groups. Selecting one shows what it accepts and rejects. -->
+<section class="chapter" aria-labelledby="rules-title">
+  <div class="chapter-heading">
+    <div><p class="eyebrow">Rules</p><h2 id="rules-title">The proposal adds six rules in three groups</h2><p class="lede">Each rule rejects one specific failure. Select a rule to see what it accepts and what it rejects.</p></div>
+    <button type="button" class="button-quiet" id="rule-list-toggle" aria-pressed="false">Show every rule in full</button>
+  </div>
+  <div class="rule-map" id="rule-map" aria-label="Rules by group"></div>
+  <div class="rule-detail" id="rule-detail" aria-live="polite"></div>
+  <div class="table-scroll rule-list" id="rule-list" hidden><table class="data-table" id="rule-table"></table></div>
+</section>
+<!-- Figures for the rule detail. The id is rule id + "-accepts" or "-rejects". A rule without figures shows text only. -->
+<template id="R4-accepts"><svg class="dx" viewBox="0 0 200 100" role="img" aria-label="A heading scope that stops above the last row."><rect class="scope focus" x="76" y="30" width="68" height="64" rx="2"/><rect class="box" x="4" y="8" width="192" height="88"/><line class="line" x1="4" y1="28" x2="196" y2="28"/><line class="line" x1="4" y1="50" x2="196" y2="50"/><line class="line" x1="4" y1="72" x2="196" y2="72"/><line class="line" x1="68" y1="28" x2="68" y2="72"/><line class="line" x1="132" y1="28" x2="132" y2="72"/></svg></template>
+<template id="R4-rejects"><svg class="dx" viewBox="0 0 200 100" role="img" aria-label="A heading scope that spills into the last row."><rect class="scope focus" x="76" y="30" width="68" height="64" rx="2"/><rect class="spill" x="7" y="75" width="186" height="18" rx="2"/><rect class="box" x="4" y="8" width="192" height="88"/><line class="line" x1="4" y1="28" x2="196" y2="28"/><line class="line" x1="4" y1="50" x2="196" y2="50"/><line class="line" x1="4" y1="72" x2="196" y2="72"/><line class="line" x1="68" y1="28" x2="68" y2="72"/><line class="line" x1="132" y1="28" x2="132" y2="72"/></svg></template>
+<!-- END: rules -->

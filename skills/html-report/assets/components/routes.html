@@ -1,0 +1,45 @@
+<!-- COMPONENT: routes · The same inputs drawn twice, old and new. Tabs choose the view. -->
+<section class="chapter" aria-labelledby="routes-title">
+  <div class="chapter-heading">
+    <div><p class="eyebrow">How it works</p><h2 id="routes-title">Reader v2 sends each page type to its own reader</h2><p class="lede">Reader v1 reads every page with one prompt. Reader v2 picks a reader for each page type, then checks every answer.</p></div>
+  </div>
+  <div class="explainer" data-views data-view="both" data-expand>
+    <div class="explainer-bar">
+      <div class="tabs views-toggle" aria-label="Choose view"><button type="button" data-view="a" aria-pressed="false">Reader v1</button><button type="button" data-view="b" aria-pressed="false">Reader v2</button><button type="button" data-view="both" aria-pressed="true">Side by side</button></div>
+    </div>
+    <div class="views">
+      <figure class="view a" style="margin:0">
+        <h3>Reader v1 reads every page with one prompt</h3>
+        <svg class="dx" viewBox="0 0 520 250" role="img" aria-label="Four page types go into one prompt. The datasheet comes out as a manual.">
+          <text class="lbl" x="8" y="18">PAGES</text>
+          <rect class="group" x="4" y="34" width="210" height="200" rx="8"/>
+          <g><text x="20" y="71">Manual page</text><rect class="box" x="188" y="60" width="12" height="12" rx="2"/><line class="line" x1="214" y1="66" x2="300" y2="133"/></g>
+          <g class="is-bad"><text x="20" y="116">Datasheet</text><rect class="box" x="188" y="105" width="12" height="12" rx="2"/><line class="line" x1="214" y1="111" x2="300" y2="133"/></g>
+          <g><text x="20" y="161">Notice</text><rect class="box" x="188" y="150" width="12" height="12" rx="2"/><line class="line" x1="214" y1="156" x2="300" y2="133"/></g>
+          <g><text x="20" y="206">Form</text><rect class="box" x="188" y="195" width="12" height="12" rx="2"/><line class="line" x1="214" y1="201" x2="300" y2="133"/></g>
+          <rect class="node" x="300" y="113" width="40" height="40" rx="4"/><line class="tick" x1="308" y1="126" x2="332" y2="126"/><line class="tick" x1="308" y1="133" x2="332" y2="133"/><line class="tick" x1="308" y1="140" x2="332" y2="140"/>
+          <text class="lbl" x="320" y="100" text-anchor="middle">ONE PROMPT</text><text class="lbl" x="320" y="176" text-anchor="middle">EVERY PAGE</text>
+          <line class="line" x1="348" y1="133" x2="384" y2="133"/><path class="tip" d="M390 133l-7-4v8z"/>
+          <g><text class="bad-t" x="400" y="128">Datasheet read</text><text class="bad-t" x="400" y="146">as a manual</text></g>
+        </svg>
+        <p class="caption">one prompt for every page type<br>↳ red: the page that Reader v1 gets wrong</p>
+      </figure>
+      <figure class="view b" style="margin:0">
+        <h3>Reader v2 picks a reader for each page type</h3>
+        <svg class="dx" viewBox="0 0 520 250" role="img" aria-label="Each page type goes to its own reader, then to one check, then to the saved result. The notice comes out as a form.">
+          <text class="lbl" x="8" y="18">PAGES</text><text class="lbl" x="266" y="18">READER</text>
+          <rect class="group" x="4" y="34" width="210" height="200" rx="8"/>
+          <g class="is-on"><text x="20" y="71">Manual page</text><rect class="box" x="188" y="60" width="12" height="12" rx="2"/><line class="line" x1="214" y1="66" x2="238" y2="66"/><circle class="dot" cx="250" cy="66" r="8"/><circle class="pip" cx="250" cy="66" r="2.4"/><text class="on-t" x="266" y="71">manual</text><line class="line" x1="340" y1="66" x2="422" y2="133"/></g>
+          <g class="is-on"><text x="20" y="116">Datasheet</text><rect class="box" x="188" y="105" width="12" height="12" rx="2"/><line class="line" x1="214" y1="111" x2="238" y2="111"/><circle class="dot" cx="250" cy="111" r="8"/><circle class="pip" cx="250" cy="111" r="2.4"/><text class="on-t" x="266" y="116">datasheet</text><line class="line" x1="350" y1="111" x2="422" y2="133"/></g>
+          <g class="is-bad"><text x="20" y="161">Notice</text><rect class="box" x="188" y="150" width="12" height="12" rx="2"/><line class="line" x1="214" y1="156" x2="238" y2="156"/><circle class="dot" cx="250" cy="156" r="8"/><circle class="pip" cx="250" cy="156" r="2.4"/><text class="bad-t" x="266" y="161">read as form</text><line class="line" x1="370" y1="156" x2="422" y2="133"/></g>
+          <g class="is-on"><text x="20" y="206">Form</text><rect class="box" x="188" y="195" width="12" height="12" rx="2"/><line class="line" x1="214" y1="201" x2="238" y2="201"/><circle class="dot" cx="250" cy="201" r="8"/><circle class="pip" cx="250" cy="201" r="2.4"/><text class="on-t" x="266" y="206">form</text><line class="line" x1="320" y1="201" x2="422" y2="133"/></g>
+          <path class="gate" d="M436 119L450 133L436 147L422 133Z"/><text class="lbl" x="436" y="174" text-anchor="middle">CHECK</text>
+          <line class="line" x1="454" y1="133" x2="482" y2="133"/><path class="tip" d="M488 133l-7-4v8z"/>
+          <circle class="okc" cx="502" cy="133" r="8"/><text class="lbl" x="514" y="108" text-anchor="end">SAVE</text>
+        </svg>
+        <p class="caption">four readers · one check<br>↳ red: the page that Reader v2 still gets wrong</p>
+      </figure>
+    </div>
+  </div>
+</section>
+<!-- END: routes -->

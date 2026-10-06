@@ -1,0 +1,63 @@
+{
+  "catalog": {
+    "selected": "R4",
+    "groups": [
+      {
+        "id": "source",
+        "label": "Source"
+      },
+      {
+        "id": "tables",
+        "label": "Tables"
+      },
+      {
+        "id": "publish",
+        "label": "Saving"
+      }
+    ],
+    "items": [
+      {
+        "id": "R1",
+        "group": "source",
+        "name": "Names its source page",
+        "accepts": "A correction that names the exact page and PDF version.",
+        "rejects": "A correction that names a different version of the PDF."
+      },
+      {
+        "id": "R2",
+        "group": "source",
+        "name": "A second call reviews it",
+        "accepts": "A review with its own response ID.",
+        "rejects": "A review that has the same response ID as the correction."
+      },
+      {
+        "id": "R3",
+        "group": "tables",
+        "name": "Each printed cell keeps a record",
+        "accepts": "Merged cells keep the values that the page shows.",
+        "rejects": "A table that drops an empty cell from the count."
+      },
+      {
+        "id": "R4",
+        "group": "tables",
+        "name": "A heading stays in its scope",
+        "accepts": "A local heading covers only its own rows and columns.",
+        "rejects": "A local heading that reaches later rows."
+      },
+      {
+        "id": "R5",
+        "group": "publish",
+        "name": "Save whole documents only",
+        "accepts": "A document where every page passes review.",
+        "rejects": "A document with one page that failed review."
+      },
+      {
+        "id": "R6",
+        "group": "publish",
+        "name": "One failure, others continue",
+        "accepts": "The queue moves on after a held document.",
+        "rejects": "A batch that stops at the first failure."
+      }
+    ]
+  }
+}

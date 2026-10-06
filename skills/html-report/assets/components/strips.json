@@ -1,0 +1,163 @@
+{
+  "groups": [
+    {
+      "id": "manual",
+      "label": "Manuals",
+      "color": "var(--color-cat-1)"
+    },
+    {
+      "id": "datasheet",
+      "label": "Datasheets",
+      "color": "var(--color-cat-2)"
+    },
+    {
+      "id": "notice",
+      "label": "Notices",
+      "color": "var(--color-cat-3)"
+    },
+    {
+      "id": "form",
+      "label": "Forms",
+      "color": "var(--color-cat-4)"
+    }
+  ],
+  "packets": [
+    {
+      "id": "p01",
+      "units": 10,
+      "summary": "Three documents in one file",
+      "status": "Reader v2 adds one boundary",
+      "flagged": true,
+      "caption": "The red outline shows the extra boundary before page 6. Pages 4 to 8 are one document.",
+      "rows": [
+        {
+          "label": "Correct ranges",
+          "note": "3 documents",
+          "segments": [
+            {
+              "from": 1,
+              "to": 3,
+              "group": "manual"
+            },
+            {
+              "from": 4,
+              "to": 8,
+              "group": "datasheet"
+            },
+            {
+              "from": 9,
+              "to": 10,
+              "group": "form"
+            }
+          ]
+        },
+        {
+          "label": "Reader v2",
+          "note": "One extra boundary",
+          "segments": [
+            {
+              "from": 1,
+              "to": 3,
+              "group": "manual"
+            },
+            {
+              "from": 4,
+              "to": 5,
+              "group": "datasheet"
+            },
+            {
+              "from": 6,
+              "to": 8,
+              "group": "datasheet",
+              "flag": true
+            },
+            {
+              "from": 9,
+              "to": 10,
+              "group": "form"
+            }
+          ]
+        },
+        {
+          "label": "Reader v1",
+          "note": "Exact match",
+          "segments": [
+            {
+              "from": 1,
+              "to": 3,
+              "group": "manual"
+            },
+            {
+              "from": 4,
+              "to": 8,
+              "group": "datasheet"
+            },
+            {
+              "from": 9,
+              "to": 10,
+              "group": "form"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p02",
+      "units": 6,
+      "summary": "Two documents in one file",
+      "status": "Both exact",
+      "flagged": false,
+      "caption": "Both readers find every page range in this packet.",
+      "rows": [
+        {
+          "label": "Correct ranges",
+          "note": "2 documents",
+          "segments": [
+            {
+              "from": 1,
+              "to": 2,
+              "group": "notice"
+            },
+            {
+              "from": 3,
+              "to": 6,
+              "group": "manual"
+            }
+          ]
+        },
+        {
+          "label": "Reader v2",
+          "note": "Exact match",
+          "segments": [
+            {
+              "from": 1,
+              "to": 2,
+              "group": "notice"
+            },
+            {
+              "from": 3,
+              "to": 6,
+              "group": "manual"
+            }
+          ]
+        },
+        {
+          "label": "Reader v1",
+          "note": "Exact match",
+          "segments": [
+            {
+              "from": 1,
+              "to": 2,
+              "group": "notice"
+            },
+            {
+              "from": 3,
+              "to": 6,
+              "group": "manual"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
