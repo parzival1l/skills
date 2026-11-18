@@ -25,7 +25,9 @@ npx skills@latest add parzival1l/skills --skill bro
 python3 sync.py
 ```
 
-Add `-a claude-code` (once per agent) to link them for other agents too. Each run takes the newest version from every source. The script skips skills whose `~/.agents/skills` entry is a symlink, so local development links stay. DevBox runs it at boot when the manifest changes, and every night.
+Add `-a claude-code` (once per agent) to link them for other agents too. Each run takes the newest version from every source. The script skips skills whose `~/.agents/skills` entry is a symlink, so local development links stay. A skill its source no longer has logs a warning; the rest still install. DevBox runs it every night, and at boot when this repository's `main` has a new commit.
+
+On the Mac, run it from `~/Personal/skills`. The CLI records each skill's source path in `~/.agents/.skill-lock.json`, so a run from a worktree or temporary copy leaves a path that `npx skills update` cannot use later.
 
 ## Skills
 

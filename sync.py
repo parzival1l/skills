@@ -4,10 +4,15 @@
 Skills go to ~/.agents/skills, which OpenCode reads. Pass -a for each
 other agent that should get a link, for example `-a claude-code`.
 A skill whose ~/.agents/skills entry is a symlink stays as it is, so local
-development links survive. Exits 1 when a source fails or a skill is missing.
+development links survive. Exits 1 when a source command fails. A skill
+missing from its source only logs a warning, so the rest still install.
+
+The CLI runs with a minimal environment: no tokens or other secrets. It
+needs none, because every source is a public GitHub repo or this checkout.
 """
 
 import argparse
+import json
 import os
 import subprocess
 import sys
@@ -15,7 +20,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 MANIFEST = ROOT / "manifest.txt"
-CLI = "skills@1"
+CLI = "skills@1.9.0"  # exact version: it runs with the user's HOME
 
 
 def read_manifest(path):
@@ -32,6 +37,17 @@ def read_manifest(path):
     return sources
 
 
+def cli_env():
+    """Return the environment for the CLI: only what npx needs."""
+    env = {
+        name: value
+        for name, value in os.environ.items()
+        if name in ("PATH", "HOME") or name.lower().startswith("npm_config_")
+    }
+    env["DO_NOT_TRACK"] = "1"
+    return env
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument(
@@ -42,11 +58,15 @@ def main():
     parser.add_argument(
         "--dry-run", action="store_true", help="print the commands only",
     )
+    parser.add_argument(
+        "--report", type=Path,
+        help="write the missing skill names to this JSON file",
+    )
     args = parser.parse_args()
 
     agents = args.agent or ["opencode"]
     installed = Path.home() / ".agents" / "skills"
-    env = {**os.environ, "DO_NOT_TRACK": "1"}
+    env = cli_env()
     manifest = read_manifest(args.manifest)
     failed = []
 
@@ -90,12 +110,15 @@ def main():
         for skill in skills
         if not (installed / skill / "SKILL.md").is_file()
     ]
+    if args.report:
+        args.report.write_text(json.dumps({"missing": missing}, indent=2))
     if missing:
-        print(f"error: not installed: {' '.join(missing)}", file=sys.stderr)
-    if failed or missing:
+        print(f"warning: not installed: {' '.join(missing)}", file=sys.stderr)
+    if failed:
+        print(f"error: failed sources: {' '.join(failed)}", file=sys.stderr)
         return 1
-    print(f"skills: all {sum(map(len, manifest.values()))} installed "
-          f"in {installed}")
+    total = sum(map(len, manifest.values()))
+    print(f"skills: {total - len(missing)} of {total} installed in {installed}")
     return 0
 
 
