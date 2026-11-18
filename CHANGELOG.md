@@ -14,6 +14,7 @@ Notable changes to this skill collection appear here. Add new entries under **Un
 - Update `html-report` to v7, with ideas from the `jerryjliu/docjev` report builder. When numbers come from result files, the agent writes a `collect.py` that computes them and fails when totals don't match, instead of typing them. `report.data.json` lists its `sources`. The build records a SHA-256 for each source, stamps the build time in the footer and a `generated` meta tag, and escapes the inlined data safely. The new `scripts/page_image.py` renders whole PDF pages, scaled and never cropped. `WRITING.md` adds rules for marking guesses and a six-question checklist for `method`.
 - Update `html-report` to v8: remove the `collect.py` step. The skill builds explainers from prose sources, so a script that counts result rows only adds a turn. `page_image.py` moves from the Build steps to the `spotlight` row in `COMPONENTS.md`, so only reports that show a page see it.
 - Add `manifest.txt` and `sync.py`. The manifest lists my skills and the third-party skills each machine should have, by source and name. `sync.py` installs them with `npx skills` for OpenCode and any other agent.
+- Add `better`, `file-pr`, `prompt`, `rift`, `test-audit`, `thermo-nuclear-code-quality-review`, and the seven `spec-*` skills from the Mac. Add `pbakaus/impeccable` to the manifest.
 
 ## 2026-09-28
 

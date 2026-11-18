@@ -33,5 +33,12 @@ On the Mac, run it from `~/Personal/skills`. The CLI records each skill's source
 
 - [bro](skills/bro/SKILL.md): Restate the last message in plain language.
 - [html-report](skills/html-report/SKILL.md): Build a fast, single-file HTML report that explains with static diagrams, tabs, and scrollable tables. Dark by default with a light-mode switch.
+- [better](skills/better/SKILL.md): Push the current task or a given prompt to a deeper version of itself.
+- [file-pr](skills/file-pr/SKILL.md): File a concise pull request.
+- [prompt](skills/prompt/SKILL.md): Write a structured prompt that hands a problem to another agent.
+- [rift](skills/rift/SKILL.md): Remove a finished Rift workspace and run Rift garbage collection.
+- [test-audit](skills/test-audit/SKILL.md): Audit tests for low-value, implementation-coupled, or duplicate cases.
+- [thermo-nuclear-code-quality-review](skills/thermo-nuclear-code-quality-review/SKILL.md): Run a strict maintainability review.
+- `spec-*` ([apis](skills/spec-apis/SKILL.md), [build-plan](skills/spec-build-plan/SKILL.md), [failures](skills/spec-failures/SKILL.md), [files](skills/spec-files/SKILL.md), [flows](skills/spec-flows/SKILL.md), [models](skills/spec-models/SKILL.md), [prototype](skills/spec-prototype/SKILL.md)): Methods for each section of a spec, used by the Spec agent.
 
 Each skill lives in `skills/<name>/SKILL.md`. See [skills/README.md](skills/README.md) for credits and [CHANGELOG.md](CHANGELOG.md) for updates.

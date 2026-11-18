@@ -9,6 +9,23 @@
 .                                       bro
 .                                       html-report
 
+.                                       better
+.                                       file-pr
+.                                       prompt
+.                                       rift
+.                                       test-audit
+.                                       thermo-nuclear-code-quality-review
+
+.                                       spec-apis
+.                                       spec-build-plan
+.                                       spec-failures
+.                                       spec-files
+.                                       spec-flows
+.                                       spec-models
+.                                       spec-prototype
+
+pbakaus/impeccable                      impeccable
+
 emilkowalski/skills                     animate
 emilkowalski/skills                     apple-design
 emilkowalski/skills                     emil-design-eng
