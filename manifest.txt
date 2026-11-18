@@ -1,0 +1,40 @@
+# Skills every machine should have. `python3 sync.py` installs them.
+#
+# One skill per line: the source, then the skill name. A source is a GitHub
+# owner/repo, or "." for this repository. Third-party skills install from
+# their own repository, so each sync takes the newest upstream version.
+# Comment out a line to stop installing it; sync never removes skills.
+
+# source                                skill
+.                                       bro
+.                                       html-report
+
+emilkowalski/skills                     animate
+emilkowalski/skills                     apple-design
+emilkowalski/skills                     emil-design-eng
+emilkowalski/skills                     find-animation-opportunities
+emilkowalski/skills                     improve-animations
+emilkowalski/skills                     pick-ui-library
+emilkowalski/skills                     prototype
+emilkowalski/skills                     review-animations
+
+humanlayer/skills                       show-me
+jakubkrehel/make-interfaces-feel-better make-interfaces-feel-better
+kitlangton/scrawl                       scrawl
+vercel-labs/skills                      find-skills
+
+mattpocock/skills                       codebase-design
+mattpocock/skills                       grill-me
+mattpocock/skills                       grill-with-docs
+mattpocock/skills                       handoff
+mattpocock/skills                       improve-codebase-architecture
+mattpocock/skills                       teach
+mattpocock/skills                       wait-what
+mattpocock/skills                       wayfinder
+
+# Gone from mattpocock/skills (2026-11-17). Upstream now has domain-modeling,
+# to-spec and to-tickets, which may replace some of these.
+# mattpocock/skills                     domain-model
+# mattpocock/skills                     to-issues
+# mattpocock/skills                     to-prd
+# mattpocock/skills                     zoom-out

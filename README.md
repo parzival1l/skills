@@ -17,6 +17,16 @@ Select the skills and agents you want when prompted. To install only `bro`, use:
 npx skills@latest add parzival1l/skills --skill bro
 ```
 
+## Sync a machine
+
+[manifest.txt](manifest.txt) lists every skill a machine should have: my own skills from this repository and third-party skills by their GitHub source. To install them all for OpenCode, run:
+
+```bash
+python3 sync.py
+```
+
+Add `-a claude-code` (once per agent) to link them for other agents too. Each run takes the newest version from every source. The script skips skills whose `~/.agents/skills` entry is a symlink, so local development links stay. DevBox runs it at boot when the manifest changes, and every night.
+
 ## Skills
 
 - [bro](skills/bro/SKILL.md): Restate the last message in plain language.

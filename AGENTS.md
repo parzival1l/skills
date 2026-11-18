@@ -8,4 +8,6 @@ This repository holds agent skills. Keep it small and easy to install with `npx 
 - List every skill in `README.md` with a link to its `SKILL.md`.
 - List skills and credit external authors and sources in `skills/README.md`.
 - Record user-facing skill additions and changes in `CHANGELOG.md`.
+- List every skill a machine should have in `manifest.txt`: this repository's skills as `.`, third-party skills by GitHub `owner/repo`. Never copy a third-party skill into `skills/`.
+- Keep `sync.py` to the Python standard library. It runs on the Mac and on DevBox.
 - Do not add plugin manifests, release automation, or category folders.
