@@ -13,6 +13,7 @@
 .                                       file-pr
 .                                       prompt
 .                                       rift
+.                                       transport
 .                                       test-audit
 .                                       thermo-nuclear-code-quality-review
 

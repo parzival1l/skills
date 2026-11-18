@@ -37,6 +37,7 @@ On the Mac, run it from `~/Personal/skills`. The CLI records each skill's source
 - [file-pr](skills/file-pr/SKILL.md): File a concise pull request.
 - [prompt](skills/prompt/SKILL.md): Write a structured prompt that hands a problem to another agent.
 - [rift](skills/rift/SKILL.md): Remove a finished Rift workspace and run Rift garbage collection.
+- [transport](skills/transport/SKILL.md): Move this T3 thread and checkout between the Mac and DevBox after the turn ends.
 - [test-audit](skills/test-audit/SKILL.md): Audit tests for low-value, implementation-coupled, or duplicate cases.
 - [thermo-nuclear-code-quality-review](skills/thermo-nuclear-code-quality-review/SKILL.md): Run a strict maintainability review.
 - `spec-*` ([apis](skills/spec-apis/SKILL.md), [build-plan](skills/spec-build-plan/SKILL.md), [failures](skills/spec-failures/SKILL.md), [files](skills/spec-files/SKILL.md), [flows](skills/spec-flows/SKILL.md), [models](skills/spec-models/SKILL.md), [prototype](skills/spec-prototype/SKILL.md)): Methods for each section of a spec, used by the Spec agent.
